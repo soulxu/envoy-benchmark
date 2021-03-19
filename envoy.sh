@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-echo "" > ./envoy.pid
 
 ENVOY_CPU_SET=${ENVOY_CPU_SET:=13-17}
 ENVOY_CONCURRENCY=${ENVOY_CONCURRENCY:=4}
@@ -10,4 +9,4 @@ ENVOY_CONFIG=${ENVOY_CONFIG:=}
 taskset -c ${ENVOY_CPU_SET} ${ENVOY_BIN} --config-path $ENVOY_CONFIG --concurrency $ENVOY_CONCURRENCY > /dev/null 2>&1 &
 echo "envoy started"
 
-echo "$!" >> envoy.pid
+echo "$!" > envoy.pid

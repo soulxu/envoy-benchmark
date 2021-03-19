@@ -34,7 +34,7 @@ bash -x ./nighthawk-client.sh
 # remote cleanup
 echo "Kill envoy on $ENVOY_HOST"
 ssh -i $SSH_KEY hejiexu@$ENVOY_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`cat ./envoy.pid\`"'
-echo "Kill fortio on $ENVOY_HOST"
+echo "Kill fortio on $FORTIO_HOST"
 ssh -i $SSH_KEY hejiexu@$FORTIO_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`cat ./fortio.pid\`"'
 
 # local cleanup
