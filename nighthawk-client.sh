@@ -14,6 +14,6 @@ for rps in `seq $RPS_START $RPS_INCREASE $RPS_END`; do
 
   taskset -c $CPU_SET ~/go/src/github.com/envoyproxy/nighthawk/bazel-bin/nighthawk_client \
     --rps $rps --connections $CONNECTIONS --duration $DURATION --concurrency $CONCURRENCY -v info $TRANSPORT_OPT --request-body-size ${REQUEST_BODY_SIZE} \
-    --output-format fortio http://127.0.0.1:13333/ > ${BASE_DIR}/nighthawk_rps_${rps}_connections_${CONNECTIONS}_concurrency_${CONCURRENCY}_duration_${DURATION}.json
+    --output-format fortio http://$ENVOY_HOST:13333/ > ${BASE_DIR}/nighthawk_rps_${rps}_connections_${CONNECTIONS}_concurrency_${CONCURRENCY}_duration_${DURATION}.json
 
 done
