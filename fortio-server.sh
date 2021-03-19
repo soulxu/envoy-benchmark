@@ -6,4 +6,4 @@ echo "" > ./fortio.pid
 
 taskset -c ${FORTIO_CPU_SET} fortio server > /dev/null 2>&1 &
 
-echo FORTIO_PID=$! >> ./fortio.pid
+echo "$!" >> ./fortio.pid
