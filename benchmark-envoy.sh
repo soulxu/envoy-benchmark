@@ -28,7 +28,7 @@ export RPS_START=${RPS_START:=5000}
 export RPS_INCREASE=${RPS_INCREASE:=5000}
 export RPS_END=${RPS_END:=100000}
 mkdir -p $BASE_DIR
-bash ./nighthawk-client.sh
+bash -x ./nighthawk-client.sh
 
 
 # remote cleanup

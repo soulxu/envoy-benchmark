@@ -23,8 +23,9 @@ export REQUEST_BODY_SIZE=512
 TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext","common_tls_context":{"tls_certificates":[{"private_key":{"filename":"/home/hejiexu/cert/client-key.pem"},"certificate_chain":{"filename":"/home/hejiexu/cert/client.pem"}}]}}}'
 
 # update benchmark script
-ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; git pull origin master"
-ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; git pull origin master"
+echo "Update benchmark script to ENVOY and FORTIO host"
+ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; GIT_SSH_COMMAND='ssh -i /home/hejiexu/openlab_key' git pull origin master"
+ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; GIT_SSH_COMMAND='ssh -i /home/hejiexu/openlab_key' git pull origin master"
 
 # Switch envoy branch to cpu_affinity one
 #pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
