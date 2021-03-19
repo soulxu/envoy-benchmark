@@ -30,6 +30,8 @@ ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; G
 # Switch envoy branch to cpu_affinity one
 #pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
 ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoyproxy/envoy; git checkout cpu_affinity_8; bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static"
+#git checkout cpu_affinity_8
+#bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static
 #popd
 
 # separate cpuset between the client and envoy
