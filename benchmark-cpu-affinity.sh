@@ -2,6 +2,7 @@
 
 set -e
 
+
 export ENVOY_HOST=172.16.1.10
 export FORTIO_HOST=172.16.1.11
 export SSH_KEY=/home/hejiexu/openlab_key
@@ -19,21 +20,7 @@ export RPS_END=35000
 export REQUEST_BODY_SIZE=512
 
 
-# the debug ### override data
-#RESULT_DIR='./tmp'
-#export CPU_SET=40-47 # 8 cpu pinning
-#export CONCURRENCY=8
-#export DURATION=60
-#export RPS_START=5000
-#export RPS_INCREASE=5000
-#export RPS_END=5000
-
 TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext","common_tls_context":{"tls_certificates":[{"private_key":{"filename":"/home/hejiexu/cert/client-key.pem"},"certificate_chain":{"filename":"/home/hejiexu/cert/client.pem"}}]}}}'
-
-# separate cpuset between the client and envoy
-export CPU_SET=18-27 # 8 cpu pinning
-export ENVOY_CPU_SET=9-17
-export ENVOY_CONCURRENCY=8
 
 # update benchmark script
 ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; git pull origin master"
@@ -43,6 +30,11 @@ ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; g
 #pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
 ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoyproxy/envoy; git checkout cpu_affinity_8; bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static"
 #popd
+
+# separate cpuset between the client and envoy
+export CPU_SET=18-27 # 8 cpu pinning
+export ENVOY_CPU_SET=9-17
+export ENVOY_CONCURRENCY=8
 
 # test with cpu affinity and tls
 export ENVOY_CONFIG=./envoy-http-with-tls.yaml

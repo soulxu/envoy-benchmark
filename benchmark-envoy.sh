@@ -8,7 +8,7 @@ set -e
 # Running fortio server
 export FORTIO_CPU_SET=54-61
 echo "start fortio server on $FORTIO_HOST"
-ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; PATH=$PATH:/home/hejiexu/go/bin bash ./fortio-server.sh"
+ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; PATH=$PATH:/home/hejiexu/go/bin FORTIO_CPU_SET=$FORTIO_CPU_SET bash ./fortio-server.sh"
 
 # Running envoy
 export ENVOY_CPU_SET=${ENVOY_CPU_SET:=13-17} # 5 cpu pinning, 4 for worker threads, 1 for main thread
@@ -16,7 +16,7 @@ export ENVOY_CONCURRENCY=${ENVOY_CONCURRENCY:=4} # 4 workers
 export ENVOY_CONFIG=${ENVOY_CONFIG}
 
 echo "start envoy on $ENVOY_HOST"
-ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; bash ./envoy.sh"
+ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; ENVOY_CPU_SET=$ENVOY_CPU_SET ENVOY_CONCURRENCY=$ENVOY_CONCURRENCY ENVOY_CONFIG=$ENVOY_CONFIG bash ./envoy.sh"
 
 sleep 5 # ensure envoy and fortio startup
 
