@@ -41,6 +41,7 @@ export ENVOY_CONCURRENCY=8
 export ENVOY_CONFIG=./envoy-http-with-tls.yaml
 export BASE_DIR=$RESULT_DIR/envoy-with-cpu-affinity-with-tls
 export TRANSPORT_OPT="--transport-socket $TRANSPORT_SOCKET"
+echo "Begin to test cpu affinity with tls"
 bash ./benchmark-envoy.sh
 
 
@@ -48,6 +49,7 @@ bash ./benchmark-envoy.sh
 export ENVOY_CONFIG=./envoy-http.yaml
 export BASE_DIR=$RESULT_DIR/envoy-with-cpu-affinity-without-tls
 export TRANSPORT_OPT=
+echo "Begin to test cpu affinity without tls"
 bash ./benchmark-envoy.sh
 
 
@@ -66,10 +68,12 @@ export ENVOY_CPU_SET=10-17
 export ENVOY_CONFIG=./envoy-http-with-tls.yaml
 export BASE_DIR=$RESULT_DIR/envoy-without-cpu-affinity-with-tls
 export TRANSPORT_OPT="--transport-socket $TRANSPORT_SOCKET"
+echo "Begin to test without cpu affinity with tls"
 bash ./benchmark-envoy.sh
 
 # test without cpu affinity and without tls
 export ENVOY_CONFIG=./envoy-http.yaml
 export BASE_DIR=$RESULT_DIR/envoy-without-cpu-affinity-without-tls
 export TRANSPORT_OPT=
+echo "Begin to test without cpu affinity without tls"
 bash ./benchmark-envoy.sh
