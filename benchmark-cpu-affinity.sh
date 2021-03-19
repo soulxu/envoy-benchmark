@@ -2,18 +2,17 @@
 
 set -e
 
-pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
-git checkout cpu_affinity_8
-bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static
-popd
+export ENVOY_HOST=172.16.1.10
+export FORTIO_HOST=172.16.1.11
+export SSH_KEY=/home/hejiexu/openlab_key
 
 RESULT_DIR='./result'
 
 # the override data
-RESULT_DIR='./result_8_client_cpus_8_cur_bodysize_512_with_noise_8_core'
+RESULT_DIR='./result_remote'
 
 export CONCURRENCY=8
-export DURATION=120
+export DURATION=20
 export RPS_START=1000
 export RPS_INCREASE=1000
 export RPS_END=35000
@@ -35,6 +34,10 @@ TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"typ
 export CPU_SET=18-27 # 8 cpu pinning
 export ENVOY_CPU_SET=9-17
 export ENVOY_CONCURRENCY=8
+
+#pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
+ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoyproxy/envoy; git checkout cpu_affinity_8; bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static"
+#popd
 
 # test with cpu affinity and tls
 export ENVOY_CONFIG=./envoy-http-with-tls.yaml
