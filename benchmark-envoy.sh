@@ -32,6 +32,8 @@ export RPS_END=${RPS_END:=100000}
 mkdir -p $BASE_DIR
 bash -x ./nighthawk-client.sh
 
+# collect envoy metrics
+curl 192.168.222.10:9901/stats > $BASE_DIR/envoy_stats.txt
 
 # remote cleanup
 echo "Kill envoy on $ENVOY_HOST"
