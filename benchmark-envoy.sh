@@ -35,6 +35,31 @@ bash -x ./nighthawk-client.sh
 # collect envoy metrics
 curl 192.168.222.10:9901/stats > $BASE_DIR/envoy_stats.txt
 
+SUMMARY_FILE=$BASE_DIR/summary.txt
+touch $SUMMARY_FILE
+echo "# Envoy enviroment as below" >> $SUMMARY_FILE
+echo "ENVOY_CPU_SET=${ENVOY_CPU_SET:=13-17}" >> $SUMMARY_FILE
+echo "ENVOY_CONCURRENCY=${ENVOY_CONCURRENCY:=4}" >> $SUMMARY_FILE
+echo "ENVOY_BIN=${ENVOY_BIN:=/home/hejiexu/go/src/github.com/envoyproxy/envoy/bazel-bin//source/exe/envoy-static}" >> $SUMMARY_FILE
+echo "ENVOY_CONFIG=${ENVOY_CONFIG:=}" >> $SUMMARY_FILE
+
+echo ""
+
+echo "# Fortio server enviroment as below" >> $SUMMARY_FILE
+echo "FORTIO_CPU_SET=${FORTIO_CPU_SET:=50-59}" >> $SUMMARY_FILE
+
+echo ""
+
+echo "# Nighthawk client enviroment as below" >> $SUMMARY_FILE
+echo "CPU_SET=${CPU_SET:=40-43}" >> $SUMMARY_FILE
+echo "CONNECTIONS=${CONNECTIONS:=100}" >> $SUMMARY_FILE
+echo "DURATION=${DURATION:=120}" >> $SUMMARY_FILE
+echo "CONCURRENCY=${CONCURRENCY:=4}" >> $SUMMARY_FILE
+echo "TARGET=${TARGET:=http://127.0.0.1:13333/}" >> $SUMMARY_FILE
+echo "REQUEST_BODY_SIZE=${REQUEST_BODY_SIZE:=0}" >> $SUMMARY_FILE
+echo "MAX_REQUEST_PER_CONNECTION=${MAX_REQUEST_PER_CONNECTION:=4294937295}" >> $SUMMARY_FILE
+echo "TRANSPORT_OPT=${TRANSPORT_OPT:=}" >> $SUMMARY_FILE
+
 bash ./cleanup.sh
 
 # local cleanup
