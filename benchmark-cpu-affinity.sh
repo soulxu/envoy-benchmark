@@ -10,15 +10,15 @@ export SSH_KEY=/home/hejiexu/openlab_key
 RESULT_DIR='./result'
 
 # the override data
-RESULT_DIR='./result_remote_one_request_per_connection'
+RESULT_DIR='./result_multinodes_across_numa_nodes'
 
 export CONCURRENCY=8
-export DURATION=120
+export DURATION=20
 export RPS_START=1000
 export RPS_INCREASE=1000
 export RPS_END=10000
 export REQUEST_BODY_SIZE=4096
-export MAX_REQUEST_PER_CONNECTION=1000
+#export MAX_REQUEST_PER_CONNECTION=1000
 
 
 TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext","common_tls_context":{"tls_certificates":[{"private_key":{"filename":"/home/hejiexu/cert/client-key.pem"},"certificate_chain":{"filename":"/home/hejiexu/cert/client.pem"}}]}}}'
@@ -30,14 +30,15 @@ ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; G
 
 # Switch envoy branch to cpu_affinity one
 #pushd /home/hejiexu/go/src/github.com/envoyproxy/envoy
-ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoyproxy/envoy; git checkout cpu_affinity; bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static"
+ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoyproxy/envoy; git checkout cpu_affinity_across_numa; bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static"
 #git checkout cpu_affinity_8
 #bazel build --config=docker-clang-libc++ -c opt //source/exe:envoy-static
 #popd
 
 # separate cpuset between the client and envoy
 export CPU_SET=18-27 # 8 cpu pinning
-export ENVOY_CPU_SET=13-17
+#export ENVOY_CPU_SET=13-17
+export ENVOY_CPU_SET=13,14,15,34,35
 export ENVOY_CONCURRENCY=4
 
 # test with cpu affinity and tls
@@ -65,7 +66,8 @@ ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoypro
 
 # share same set of cpu between client and envoy
 #export CPU_SET=14-25 # 8 cpu pinning
-export ENVOY_CPU_SET=14-17
+#export ENVOY_CPU_SET=14-17
+export ENVOY_CPU_SET=14,15,34,35
 
 # test without cpu affinity and with tls
 export ENVOY_CONFIG=./envoy-http-with-tls.yaml
