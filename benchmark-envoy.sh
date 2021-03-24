@@ -4,6 +4,7 @@ set -e
 
 # Clean up running data first
 #echo "" > ./running_data.sh
+export BASE_DIR=${BASE_DIR}
 
 # Running fortio server
 export FORTIO_CPU_SET=54-61
@@ -17,13 +18,12 @@ export ENVOY_CONCURRENCY=${ENVOY_CONCURRENCY:=4} # 4 workers
 export ENVOY_CONFIG=${ENVOY_CONFIG}
 
 echo "start envoy on $ENVOY_HOST"
-ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; ENVOY_CPU_SET=$ENVOY_CPU_SET ENVOY_CONCURRENCY=$ENVOY_CONCURRENCY ENVOY_CONFIG=$ENVOY_CONFIG bash ./envoy.sh"
+ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/cpu-affinity-benchmark; BASE_DIR=$BASE_DIR ENVOY_CPU_SET=$ENVOY_CPU_SET ENVOY_CONCURRENCY=$ENVOY_CONCURRENCY ENVOY_CONFIG=$ENVOY_CONFIG bash ./envoy.sh"
 # bash ./envoy.sh
 
 sleep 5 # ensure envoy and fortio startup
 
 # Running client
-export BASE_DIR=${BASE_DIR}
 export CPU_SET=${CPU_SET:=40-43} # 4 cpu pinning
 export CONCURRENCY=${CONCURRENCY:=4}
 export RPS_START=${RPS_START:=5000}
