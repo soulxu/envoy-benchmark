@@ -18,7 +18,7 @@ export RPS_START=1000
 export RPS_INCREASE=1000
 export RPS_END=10000
 export REQUEST_BODY_SIZE=4096
-export MAX_REQUEST_PER_CONNECTION=1
+export MAX_REQUEST_PER_CONNECTION=10
 
 
 TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext","common_tls_context":{"tls_certificates":[{"private_key":{"filename":"/home/hejiexu/cert/client-key.pem"},"certificate_chain":{"filename":"/home/hejiexu/cert/client.pem"}}]}}}'
