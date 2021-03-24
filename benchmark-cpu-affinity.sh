@@ -13,10 +13,10 @@ RESULT_DIR='./result'
 RESULT_DIR='./result_remote_one_request_per_connection'
 
 export CONCURRENCY=8
-export DURATION=20
+export DURATION=10
 export RPS_START=1000
 export RPS_INCREASE=1000
-export RPS_END=35000
+export RPS_END=10000
 export REQUEST_BODY_SIZE=4096
 export MAX_REQUEST_PER_CONNECTION=1
 
