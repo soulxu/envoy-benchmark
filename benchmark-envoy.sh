@@ -7,7 +7,7 @@ set -e
 export BASE_DIR=${BASE_DIR}
 
 # Running fortio server
-export FORTIO_CPU_SET=54-61
+export FORTIO_CPU_SET=${FORTIO_CPU_SET:=54-61}
 echo "start fortio server on $FORTIO_HOST"
 ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; PATH=$PATH:/home/hejiexu/go/bin FORTIO_CPU_SET=$FORTIO_CPU_SET bash ./fortio-server.sh"
 # bash ./fortio-server.sh
