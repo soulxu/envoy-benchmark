@@ -12,15 +12,25 @@ RESULT_DIR='./result'
 # the override data
 RESULT_DIR='./result_multinodes_across_numa_nodes'
 
+# worth to debug, it will stop in the end
+#export CONCURRENCY=36
+#export DURATION=20
+#export RPS_START=1000
+#export RPS_INCREASE=1000
+#export RPS_END=5000
+#export REQUEST_BODY_SIZE=4096
+#export REQUEST_METHOD="POST"
+
+
+
 export CONCURRENCY=36
 export DURATION=20
 export RPS_START=1000
 export RPS_INCREASE=1000
-export RPS_END=5000
-export REQUEST_BODY_SIZE=4096
+export RPS_END=3000
+export REQUEST_BODY_SIZE=512
 export REQUEST_METHOD="POST"
 #export MAX_REQUEST_PER_CONNECTION=1000
-
 
 TRANSPORT_SOCKET='{name:"envoy.transport_sockets.tls",typed_config:{"@type":"type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext","common_tls_context":{"tls_certificates":[{"private_key":{"filename":"/home/hejiexu/cert/client-key.pem"},"certificate_chain":{"filename":"/home/hejiexu/cert/client.pem"}}]}}}'
 
