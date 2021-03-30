@@ -23,12 +23,12 @@ RESULT_DIR='./result_multinodes_across_numa_nodes'
 
 
 
-export CONCURRENCY=36
+export CONCURRENCY=18
 export DURATION=20
 export RPS_START=100
 export RPS_INCREASE=100
-export RPS_END=1000
-export REQUEST_BODY_SIZE=4096
+export RPS_END=500
+export REQUEST_BODY_SIZE=512
 export REQUEST_METHOD="POST"
 #export MAX_REQUEST_PER_CONNECTION=1000
 
@@ -47,7 +47,7 @@ ssh -i $SSH_KEY hejiexu@$ENVOY_HOST "cd /home/hejiexu/go/src/github.com/envoypro
 #popd
 
 # separate cpuset between the client and envoy
-export CPU_SET=18-35,36-53 # 8 cpu pinning
+export CPU_SET=18-35 #,36-53 # 8 cpu pinning
 export FORTIO_CPU_SET=18-35,36-53
 #export ENVOY_CPU_SET=13-17
 export ENVOY_CPU_SET=45-53,62-71
