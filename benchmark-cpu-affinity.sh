@@ -25,10 +25,10 @@ RESULT_DIR='./result_multinodes_across_numa_nodes'
 
 export CONCURRENCY=36
 export DURATION=20
-export RPS_START=1000
-export RPS_INCREASE=1000
-export RPS_END=3000
-export REQUEST_BODY_SIZE=512
+export RPS_START=100
+export RPS_INCREASE=100
+export RPS_END=1000
+export REQUEST_BODY_SIZE=4096
 export REQUEST_METHOD="POST"
 #export MAX_REQUEST_PER_CONNECTION=1000
 
