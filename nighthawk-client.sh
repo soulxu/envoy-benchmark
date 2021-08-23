@@ -1,22 +1,26 @@
 #!/bin/bash
 set -e
 BASE_DIR=${BASE_DIR:=./}
-CPU_SET=${CPU_SET:=40-43}
-CONNECTIONS=${CONNECTIONS:=100}
-DURATION=${DURATION:=120}
-CONCURRENCY=${CONCURRENCY:=4}
-TARGET=${TARGET:=http://127.0.0.1:13333/}
-REQUEST_BODY_SIZE=${REQUEST_BODY_SIZE:=0}
-REQUEST_METHOD=${REQUEST_METHOD:=GET}
-MAX_REQUEST_PER_CONNECTION=${MAX_REQUEST_PER_CONNECTION:=4294937295}
+NIGHTHAWK_CPU_SET=${NIGHTHAWK_CPU_SET:=40-43}
+NIGHTHAWK_CONNECTIONS=${NIGHTHAWK_CONNECTIONS:=100}
+NIGHTHAWK_DURATION=${NIGHTHAWK_DURATION:=120}
+NIGHTHAWK_CONCURRENCY=${NIGHTHAWK_CONCURRENCY:=4}
+NIGHTHAWK_TARGET=${NIGHTHAWK_TARGET:=http://127.0.0.1:13333/}
+NIGHTHAWK_REQUEST_BODY_SIZE=${NIGHTHAWK_REQUEST_BODY_SIZE:=0}
+NIGHTHAWK_REQUEST_METHOD=${NIGHTHAWK_REQUEST_METHOD:=GET}
+NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION:=4294937295}
+
+NIGHTHAWK_TRANSPORT_OPT=${NIGHTHAWK_TRANSPORT_OPT:=}
+
+taskset -c $NIGHTHAWK_CPU_SET ~/go/src/github.com/envoyproxy/nighthawk/bazel-bin/nighthawk_client \
+    --rps $NIGHTHAWK_RPS --connections $NIGHTHAWK_CONNECTIONS --duration $NIGHTHAWK_DURATION --concurrency $NIGHTHAWK_CONCURRENCY -v info $NIGHTHAWK_TRANSPORT_OPT --request-body-size ${NIGHTHAWK_REQUEST_BODY_SIZE} --request-method $NIGHTHAWK_REQUEST_METHOD --max-requests-per-connection ${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION} \
+    --timeout 120 --output-format fortio $NIGHTHAWK_TARGET > ${BASE_DIR}/nighthawk_result.json
 
 
-TRANSPORT_OPT=${TRANSPORT_OPT:=}
+# for rps in `seq $NIGHTHAWK_RPS_START $NIGHTHAWK_RPS_INCREASE $NIGHTHAWK_RPS_END`; do
 
-for rps in `seq $RPS_START $RPS_INCREASE $RPS_END`; do
+#  taskset -c $NIGHTHAWK_CPU_SET ~/go/src/github.com/envoyproxy/nighthawk/bazel-bin/nighthawk_client \
+#    --rps $rps --connections $NIGHTHAWK_CONNECTIONS --duration $NIGHTHAWK_DURATION --concurrency $NIGHTHAWK_CONCURRENCY -v info $NIGHTHAWK_TRANSPORT_OPT --request-body-size ${NIGHTHAWK_REQUEST_BODY_SIZE} --request-method $NIGHTHAWK_REQUEST_METHOD --max-requests-per-connection ${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION} \
+#    --timeout 120 --output-format fortio http://192.168.222.10:13333/ > ${BASE_DIR}/nighthawk_rps_${rps}_connections_${NIGHTHAWK_CONNECTIONS}_concurrency_${NIGHTHAWK_CONCURRENCY}_duration_${NIGHTHAWK_DURATION}.json
 
-  taskset -c $CPU_SET ~/go/src/github.com/envoyproxy/nighthawk/bazel-bin/nighthawk_client \
-    --rps $rps --connections $CONNECTIONS --duration $DURATION --concurrency $CONCURRENCY -v info $TRANSPORT_OPT --request-body-size ${REQUEST_BODY_SIZE} --request-method $REQUEST_METHOD --max-requests-per-connection ${MAX_REQUEST_PER_CONNECTION} \
-    --timeout 120 --output-format fortio http://192.168.222.10:13333/ > ${BASE_DIR}/nighthawk_rps_${rps}_connections_${CONNECTIONS}_concurrency_${CONCURRENCY}_duration_${DURATION}.json
-
-done
+# done
