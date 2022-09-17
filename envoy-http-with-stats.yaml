@@ -5,6 +5,15 @@ admin:
       protocol: TCP
       address: 0.0.0.0
       port_value: 9901
+stats_sinks:
+- name: envoy.stat_sinks.statsd
+  typed_config:
+    "@type": type.googleapis.com/envoy.config.metrics.v3.StatsdSink
+    address:
+      socket_address:
+        protocol: UDP
+        address: 127.0.0.1
+        port_value: 2003
 static_resources:
   listeners:
   - name: my_listener
@@ -13,12 +22,9 @@ static_resources:
         protocol: TCP
         address: 127.0.0.1
         port_value: 13333
-    tcp_backlog_size: 20480
     connection_balance_config:
       exact_balance: {}
-    listener_filters:
-    - name: envoy.filters.listener.tls_inspector
-      typed_config: {}
+    tcp_backlog_size: 20480
     filter_chains:
     - filters:
       # The HTTP connection manager is the only network filter.
@@ -26,7 +32,6 @@ static_resources:
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
           stat_prefix: ingress_http
-          generate_request_id: false
           route_config:
             name: local_route
             virtual_hosts:
@@ -39,34 +44,13 @@ static_resources:
                   cluster: my_cluster
           http_filters:
           - name: envoy.filters.http.router
-      transport_socket:
-        name: "downstream_transport_socket"
-        typed_config:
-          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
-          common_tls_context:
-            tls_certificates:
-            - private_key:
-                filename: "/home/hejiexu/cert/server-key.pem"
-              certificate_chain:
-                filename: "/home/hejiexu/cert/server.pem"
   clusters:
   - name: my_cluster
     connect_timeout: 0.25s
     type: strict_dns
     lb_policy: round_robin
     protocol_selection: USE_DOWNSTREAM_PROTOCOL
-    circuit_breakers:
-      thresholds:
-        - priority: DEFAULT
-          max_connections: 1000000000
-          max_pending_requests: 1000000000
-          max_requests: 1000000000
-          max_retries: 1000000000
-        - priority: HIGH
-          max_connections: 1000000000
-          max_pending_requests: 1000000000
-          max_requests: 1000000000
-          max_retries: 1000000000
+    http2_protocol_options: {}
     load_assignment:
       cluster_name: my_cluster
       endpoints:

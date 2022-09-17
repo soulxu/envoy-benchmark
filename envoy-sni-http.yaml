@@ -1,0 +1,204 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address:
+      protocol: TCP
+      address: 127.0.0.1
+      port_value: 9901
+static_resources:
+  listeners:
+  - name: my_listener
+    address:
+      socket_address:
+        protocol: TCP
+        address: 0.0.0.0
+        port_value: 13333
+    listener_filters:
+    - name: envoy.filters.listener.tls_inspector
+      typed_config: {}
+    filter_chains:
+    - filter_chain_match:
+        server_names:
+        - foo.example.com
+      filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: local_service
+              domains: ["*"]
+              routes:
+              - match:
+                  path: "/"
+                direct_response:
+                  status: 200
+          http_filters:
+          - name: envoy.filters.http.router
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              certificate_chain:
+                inline_string: |
+                  -----BEGIN CERTIFICATE-----
+                  MIICzTCCAbWgAwIBAgIUXqgCfPXFWL2+JNlwbM1zra1J73MwDQYJKoZIhvcNAQEL
+                  BQAwUjELMAkGA1UEBhMCU0UxDzANBgNVBAgTBlNrYW5pYTENMAsGA1UEBxMETHVu
+                  ZDERMA8GA1UEChMISml0ZXNvZnQxEDAOBgNVBAMTB1Jvb3QgQ0EwHhcNMjEwNzE4
+                  MTAyMjAwWhcNMjYwNzE3MTAyMjAwWjARMQ8wDQYDVQQDEwZTZXJ2ZXIwWTATBgcq
+                  hkjOPQIBBggqhkjOPQMBBwNCAATMXrg8rjmgJoV2Zf5CuPGVPBYFBibreGFbPViT
+                  aq6+SE7Zbg/1vaZu820+uz6KpJHxkFC/gwZWpaeLWftSvgx4o4GmMIGjMA4GA1Ud
+                  DwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0G
+                  A1UdDgQWBBSo1hiwGuRPu4rnhK5qv8OqCOkmOzAfBgNVHSMEGDAWgBQOami9ZYqL
+                  1YWaWNG2haodYmhVHTAuBgNVHREEJzAlgg1zZXJ2ZXIuZG9tYWlugg5zdWIuZG9t
+                  YWluLnRsZIcEfwAAATANBgkqhkiG9w0BAQsFAAOCAQEAdJJjzFIiObZwNXh/+Nwb
+                  xBzgKtBtOzCNKfMFYYKRogCd6zDxSbYqXb9hB6khvP3dLE8IEHQJV1/DOicQsPqH
+                  rV/G9utSogTRqGUagDDsj+v7jx+Lp+WUf64hWHdDDG6EIh5QvvGspLf5SIgHOX6v
+                  3GMCVyqd0NYc0jrdErmnNb4JzqfdSL6MbRVmIY/mb1yK2XLJy1s6ZfdXVCAqmWKv
+                  m/cSxQKuJ4S83c3gtWuLs/37CpTtQAkR7RXbL84mYWf/ssuEj5gu1RSFw1FKWe/Z
+                  lh1T580KIeCBCYjEOyp78pfCcd2JXFpHaMGj19G2fM/ieqQdgY2okL5wfMpuyG8l
+                  Mg==
+                  -----END CERTIFICATE-----
+              private_key:
+                inline_string: |
+                  -----BEGIN EC PRIVATE KEY-----
+                  MHcCAQEEINfWsbkpm3H8+5XTUi7zSU3gdue/k471XI0ycvvw9ijAoAoGCCqGSM49
+                  AwEHoUQDQgAEzF64PK45oCaFdmX+QrjxlTwWBQYm63hhWz1Yk2quvkhO2W4P9b2m
+                  bvNtPrs+iqSR8ZBQv4MGVqWni1n7Ur4MeA==
+                  -----END EC PRIVATE KEY-----
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: local_service
+              domains: ["*"]
+              routes:
+              - match:
+                  path: "/"
+                direct_response:
+                  status: 203
+          http_filters:
+          - name: envoy.filters.http.router
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              certificate_chain:
+                inline_string: |
+                  -----BEGIN CERTIFICATE-----
+                  MIICzTCCAbWgAwIBAgIUXqgCfPXFWL2+JNlwbM1zra1J73MwDQYJKoZIhvcNAQEL
+                  BQAwUjELMAkGA1UEBhMCU0UxDzANBgNVBAgTBlNrYW5pYTENMAsGA1UEBxMETHVu
+                  ZDERMA8GA1UEChMISml0ZXNvZnQxEDAOBgNVBAMTB1Jvb3QgQ0EwHhcNMjEwNzE4
+                  MTAyMjAwWhcNMjYwNzE3MTAyMjAwWjARMQ8wDQYDVQQDEwZTZXJ2ZXIwWTATBgcq
+                  hkjOPQIBBggqhkjOPQMBBwNCAATMXrg8rjmgJoV2Zf5CuPGVPBYFBibreGFbPViT
+                  aq6+SE7Zbg/1vaZu820+uz6KpJHxkFC/gwZWpaeLWftSvgx4o4GmMIGjMA4GA1Ud
+                  DwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0G
+                  A1UdDgQWBBSo1hiwGuRPu4rnhK5qv8OqCOkmOzAfBgNVHSMEGDAWgBQOami9ZYqL
+                  1YWaWNG2haodYmhVHTAuBgNVHREEJzAlgg1zZXJ2ZXIuZG9tYWlugg5zdWIuZG9t
+                  YWluLnRsZIcEfwAAATANBgkqhkiG9w0BAQsFAAOCAQEAdJJjzFIiObZwNXh/+Nwb
+                  xBzgKtBtOzCNKfMFYYKRogCd6zDxSbYqXb9hB6khvP3dLE8IEHQJV1/DOicQsPqH
+                  rV/G9utSogTRqGUagDDsj+v7jx+Lp+WUf64hWHdDDG6EIh5QvvGspLf5SIgHOX6v
+                  3GMCVyqd0NYc0jrdErmnNb4JzqfdSL6MbRVmIY/mb1yK2XLJy1s6ZfdXVCAqmWKv
+                  m/cSxQKuJ4S83c3gtWuLs/37CpTtQAkR7RXbL84mYWf/ssuEj5gu1RSFw1FKWe/Z
+                  lh1T580KIeCBCYjEOyp78pfCcd2JXFpHaMGj19G2fM/ieqQdgY2okL5wfMpuyG8l
+                  Mg==
+                  -----END CERTIFICATE-----
+              private_key:
+                inline_string: |
+                  -----BEGIN EC PRIVATE KEY-----
+                  MHcCAQEEINfWsbkpm3H8+5XTUi7zSU3gdue/k471XI0ycvvw9ijAoAoGCCqGSM49
+                  AwEHoUQDQgAEzF64PK45oCaFdmX+QrjxlTwWBQYm63hhWz1Yk2quvkhO2W4P9b2m
+                  bvNtPrs+iqSR8ZBQv4MGVqWni1n7Ur4MeA==
+                  -----END EC PRIVATE KEY-----
+    - filter_chain_match:
+        server_names:
+        - bar.example.com
+      filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: local_service
+              domains: ["*"]
+              routes:
+              - match:
+                  path: "/"
+                direct_response:
+                  status: 204
+          http_filters:
+          - name: envoy.filters.http.router
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              certificate_chain:
+                inline_string: |
+                  -----BEGIN CERTIFICATE-----
+                  MIICzTCCAbWgAwIBAgIUXqgCfPXFWL2+JNlwbM1zra1J73MwDQYJKoZIhvcNAQEL
+                  BQAwUjELMAkGA1UEBhMCU0UxDzANBgNVBAgTBlNrYW5pYTENMAsGA1UEBxMETHVu
+                  ZDERMA8GA1UEChMISml0ZXNvZnQxEDAOBgNVBAMTB1Jvb3QgQ0EwHhcNMjEwNzE4
+                  MTAyMjAwWhcNMjYwNzE3MTAyMjAwWjARMQ8wDQYDVQQDEwZTZXJ2ZXIwWTATBgcq
+                  hkjOPQIBBggqhkjOPQMBBwNCAATMXrg8rjmgJoV2Zf5CuPGVPBYFBibreGFbPViT
+                  aq6+SE7Zbg/1vaZu820+uz6KpJHxkFC/gwZWpaeLWftSvgx4o4GmMIGjMA4GA1Ud
+                  DwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0G
+                  A1UdDgQWBBSo1hiwGuRPu4rnhK5qv8OqCOkmOzAfBgNVHSMEGDAWgBQOami9ZYqL
+                  1YWaWNG2haodYmhVHTAuBgNVHREEJzAlgg1zZXJ2ZXIuZG9tYWlugg5zdWIuZG9t
+                  YWluLnRsZIcEfwAAATANBgkqhkiG9w0BAQsFAAOCAQEAdJJjzFIiObZwNXh/+Nwb
+                  xBzgKtBtOzCNKfMFYYKRogCd6zDxSbYqXb9hB6khvP3dLE8IEHQJV1/DOicQsPqH
+                  rV/G9utSogTRqGUagDDsj+v7jx+Lp+WUf64hWHdDDG6EIh5QvvGspLf5SIgHOX6v
+                  3GMCVyqd0NYc0jrdErmnNb4JzqfdSL6MbRVmIY/mb1yK2XLJy1s6ZfdXVCAqmWKv
+                  m/cSxQKuJ4S83c3gtWuLs/37CpTtQAkR7RXbL84mYWf/ssuEj5gu1RSFw1FKWe/Z
+                  lh1T580KIeCBCYjEOyp78pfCcd2JXFpHaMGj19G2fM/ieqQdgY2okL5wfMpuyG8l
+                  Mg==
+                  -----END CERTIFICATE-----
+              private_key:
+                inline_string: |
+                  -----BEGIN EC PRIVATE KEY-----
+                  MHcCAQEEINfWsbkpm3H8+5XTUi7zSU3gdue/k471XI0ycvvw9ijAoAoGCCqGSM49
+                  AwEHoUQDQgAEzF64PK45oCaFdmX+QrjxlTwWBQYm63hhWz1Yk2quvkhO2W4P9b2m
+                  bvNtPrs+iqSR8ZBQv4MGVqWni1n7Ur4MeA==
+                  -----END EC PRIVATE KEY-----
+  clusters:
+  - name: foo.example.com
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+    protocol_selection: USE_DOWNSTREAM_PROTOCOL
+    load_assignment:
+      cluster_name: foo.example.com
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 0.0.0.0
+                port_value: 33333
+  - name: bar.example.com
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+    protocol_selection: USE_DOWNSTREAM_PROTOCOL
+    load_assignment:
+      cluster_name: bar.example.com
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 0.0.0.0
+                port_value: 33334
