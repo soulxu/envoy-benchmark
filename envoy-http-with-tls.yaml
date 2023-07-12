@@ -14,11 +14,6 @@ static_resources:
         address: 127.0.0.1
         port_value: 13333
     tcp_backlog_size: 20480
-    connection_balance_config:
-      exact_balance: {}
-    listener_filters:
-    - name: envoy.filters.listener.tls_inspector
-      typed_config: {}
     filter_chains:
     - filters:
       # The HTTP connection manager is the only network filter.
@@ -39,6 +34,9 @@ static_resources:
                   cluster: my_cluster
           http_filters:
           - name: envoy.filters.http.router
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+              dynamic_stats: false
       transport_socket:
         name: "downstream_transport_socket"
         typed_config:
@@ -46,9 +44,9 @@ static_resources:
           common_tls_context:
             tls_certificates:
             - private_key:
-                filename: "/home/hejiexu/cert/server-key.pem"
+                filename: "/home/xhj/envoy-example/cert/root_without_intermediate/cert/server-key.pem"
               certificate_chain:
-                filename: "/home/hejiexu/cert/server.pem"
+                filename: "/home/xhj/envoy-example/cert/root_without_intermediate/cert/server.pem"
   clusters:
   - name: my_cluster
     connect_timeout: 0.25s

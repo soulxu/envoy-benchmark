@@ -22,7 +22,7 @@ echo "start envoy on $ENVOY_HOST"
 bash -x ./envoy.sh
 
 echo "waiting for envoy and fortio startup"
-sleep 5 # ensure envoy and fortio startup
+sleep 8 # ensure envoy and fortio startup
 
 echo "start nighthawk"
 # Running client
@@ -35,7 +35,11 @@ export NIGHTHAWK_DURATION=${NIGHTHAWK_DURATION:=10}
 #export NIGHTHAWK_RPS_END=${NIGHTHAWK_RPS_END:=10000}
 
 mkdir -p $BASE_DIR
-bash -x ./nighthawk-client.sh
+if [ $CLIENT = "nh" ]; then
+    bash -x ./nighthawk-client.sh
+else
+    bash -x ./fortio_client.sh
+fi
 
 # collect envoy metrics
 # curl 192.168.222.10:9901/stats > $BASE_DIR/envoy_stats.txt
