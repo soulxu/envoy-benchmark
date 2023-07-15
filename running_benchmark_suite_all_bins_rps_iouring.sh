@@ -29,6 +29,7 @@ for bin in `ls $BIN_DIR`; do
         export LOAD_RPS=${rps}
         echo "Begin to test ${BASE_DIR}"
         bash ./benchmark-envoy.sh
+        # catch the mean latency of "Request start to response end"
         echo "$rps `cat ${BASE_DIR}/nighthawk_result.result |grep "min:"| awk -F '|' 'NR == 3 {print $2}'`" >> $SUITE_DIR/$bin/test.result
     done
     sleep 3
