@@ -3,11 +3,7 @@
 set -e
 
 # All the binary path
-export NIGHTHAWK_CLIENT=${NIGHTHAWK_CLIENT:=./nighthawk_client}
-export NIGHTHAWK_SERVER=${NIGHTHAWK_SERVER:=/home/xhj/nighthawk/bazel-bin/nighthawk_test_server}
-export FORTIO_CLIENT=${FORTIO_CLIENT:=fortio}
-export FORTIO_SERVER=${FORTIO_SERVER:=~/go/bin/fortio}
-export ENVOY_BIN=${ENVOY_BIN:=/home/xhj/envoy/bazel-bin/contrib/exe/envoy-static}
+source ./env.sh
 
 # Clean up running data first
 #echo "" > ./running_data.sh
@@ -25,6 +21,9 @@ if [ $BACK_SERVER = "fortio" ]; then
     bash -x ./fortio-server.sh
 elif [ $BACK_SERVER = "nighthawk" ]; then
     bash -x ./nighthawk-server.sh
+else
+    echo "Not supported back server: $BACK_SERVER"
+    exit 1
 fi
 
 # Running envoy
@@ -53,8 +52,11 @@ mpstat -P ${ENVOY_CPU_SET} $MPSTAT_INTERVAL `expr $LOAD_DURATION / $MPSTAT_INTER
 mkdir -p $BASE_DIR
 if [ $LOAD_CLIENT = "nighthawk" ]; then
     bash -x ./nighthawk-client.sh
-elif [ $LOAD_CLIENT = "fortio"]; then
+elif [ $LOAD_CLIENT = "fortio" ]; then
     bash -x ./fortio_client.sh
+else
+    echo "Not supported load client: $LOAD_CLIENT"
+    exit 1
 fi
 
 SUMMARY_FILE=$BASE_DIR/summary.txt
