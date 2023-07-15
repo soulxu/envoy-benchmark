@@ -2,12 +2,19 @@
 
 set -e
 
+# All the binary path
+export NIGHTHAWK_CLIENT=${NIGHTHAWK_CLIENT:=./nighthawk_client}
+export NIGHTHAWK_SERVER=${NIGHTHAWK_SERVER:=/home/xhj/nighthawk/bazel-bin/nighthawk_test_server}
+export FORTIO_CLIENT=${FORTIO_CLIENT:=fortio}
+export FORTIO_SERVER=${FORTIO_SERVER:=~/go/bin/fortio}
+export ENVOY_BIN=${ENVOY_BIN:=/home/xhj/envoy/bazel-bin/contrib/exe/envoy-static}
+
 # Clean up running data first
 #echo "" > ./running_data.sh
 export BASE_DIR=${BASE_DIR:=./result}
 
-LOAD_CLIENT=${LOAD_CLIENT:=fortio}
-BACK_SERVER=${BACK_SERVER:=fortio}
+export LOAD_CLIENT=${LOAD_CLIENT:=fortio}
+export BACK_SERVER=${BACK_SERVER:=fortio}
 
 # Running fortio server
 export BACKEND_CPU_SET=${BACKEND_CPU_SET:=54-61}
