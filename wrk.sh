@@ -1,0 +1,6 @@
+W_BIN=$WRK_BIN
+if [ LOAD_CLIENT = "wrk2" ]; then
+    W_BIN=$WRK2_BIN
+fi
+
+$W_BIN -t$LOAD_CONCURRENCY -c$LOAD_CONNECTIONS -t$LOAD_DURATION --latency $LOAD_TARGET > ${BASE_DIR}/wrk.result

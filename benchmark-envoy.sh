@@ -54,6 +54,10 @@ if [ $LOAD_CLIENT = "nighthawk" ]; then
     bash -x ./nighthawk-client.sh
 elif [ $LOAD_CLIENT = "fortio" ]; then
     bash -x ./fortio_client.sh
+elif [ $LOAD_CLIENT = "wrk" ]; then
+    bash -x ./wrk.sh
+elif [ $LOAD_CLIENT = "wrk2" ]; then
+    bash -x ./wrk.sh
 else
     echo "Not supported load client: $LOAD_CLIENT"
     exit 1
