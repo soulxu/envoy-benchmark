@@ -24,7 +24,7 @@ for bin in `ls $BIN_DIR`; do
     export ENVOY_BIN=$BIN_DIR/$bin
     mkdir -p $SUITE_DIR/${bin}
     echo -n "" > $SUITE_DIR/${bin}/test.result
-    for rps in `seq 1000 200 4000`; do
+    for rps in `seq 1000 100 2500`; do
         export BASE_DIR=$SUITE_DIR/$bin/$rps
         export LOAD_RPS=${rps}
         echo "Begin to test ${BASE_DIR}"
