@@ -13,6 +13,12 @@ LOAD_MAX_REQUEST_PER_CONNECTION=${LOAD_MAX_REQUEST_PER_CONNECTION:=4294937295}
 LOAD_TRANSPORT_OPT=${LOAD_TRANSPORT_OPT:=}
 LOAD_OTHER_OPT=${LOAD_OTHER_OPT:=}
 LOAD_MAX_ACTIVE_REQUESTS=${LOAD_MAX_ACTIVE_REQUESTS:=100}
+LOAD_MODE=${LOAD_MODE:=closed}
+
+NIGHTHAWK_OPEN_LOOP_OPT=""
+if [ $LOAD_MODE = "open" ]; then
+    NIGHTHAWK_OPEN_LOOP_OPT="--open-loop"
+fi
 
 #taskset -c $LOAD_CPU_SET /home/xhj/nighthawk/bazel-bin/nighthawk_client \
 #    --rps $LOAD_RPS $LOAD_OTHER_OPT --connections $LOAD_CONNECTIONS --duration $LOAD_DURATION --concurrency $LOAD_CONCURRENCY -v info $LOAD_TRANSPORT_OPT --request-body-size ${LOAD_REQUEST_BODY_SIZE} --request-method $LOAD_REQUEST_METHOD --max-requests-per-connection ${LOAD_MAX_REQUEST_PER_CONNECTION} \
@@ -20,4 +26,4 @@ LOAD_MAX_ACTIVE_REQUESTS=${LOAD_MAX_ACTIVE_REQUESTS:=100}
 
 taskset -c $LOAD_CPU_SET ./nighthawk_client \
     --rps $LOAD_RPS $LOAD_OTHER_OPT --connections $LOAD_CONNECTIONS --duration $LOAD_DURATION --concurrency $LOAD_CONCURRENCY -v info $LOAD_TRANSPORT_OPT --request-body-size ${LOAD_REQUEST_BODY_SIZE} --request-method $LOAD_REQUEST_METHOD --max-requests-per-connection ${LOAD_MAX_REQUEST_PER_CONNECTION} \
-    --timeout 120 --max-active-requests ${LOAD_MAX_ACTIVE_REQUESTS} $LOAD_TARGET > ${BASE_DIR}/nighthawk_result.result
+    --timeout 120 $NIGHTHAWK_OPEN_LOOP_OPT --max-active-requests ${LOAD_MAX_ACTIVE_REQUESTS} $LOAD_TARGET > ${BASE_DIR}/nighthawk_result.result
