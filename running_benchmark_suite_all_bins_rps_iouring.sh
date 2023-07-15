@@ -24,16 +24,17 @@ export ENVOY_CONFIG=./envoy-iouring.yaml
 export ENVOY_CONCURRENCY=1
 export BACKEND_SERVER_PORT=13334
 
-echo "" > $SUITE_DIR/test.result
+
 
 for bin in `ls $BIN_DIR`; do
     export ENVOY_BIN=$BIN_DIR/$bin
+    echo -n "" > $SUITE_DIR/${bin}/test.result
     for rps in `seq 1000 200 4000`; do
         export BASE_DIR=$RESULT_BASE_DIR/$bin/$rps
         export LOAD_RPS=${rps}
         echo "Begin to test ${BASE_DIR}"
         bash ./benchmark-envoy.sh
-        echo "$rps `cat ${BASE_DIR}/nighthawk_result.result |grep "min:"| awk -F '|' 'NR == 3 {print $2}'`" >> $SUITE_DIR/test.result
+        echo "$rps `cat ${BASE_DIR}/nighthawk_result.result |grep "min:"| awk -F '|' 'NR == 3 {print $2}'`" >> $SUITE_DIR/$bin/test.result
     done
     sleep 3
 done
