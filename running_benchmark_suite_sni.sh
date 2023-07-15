@@ -3,10 +3,10 @@ RESULT_BASE_DIR=$SUITE_DIR/results
 
 export ENVOY_CONFIG=./envoy-http.yaml
 
-export NIGHTHAWK_RPS=500
-export NIGHTHAWK_DURATION=120
-export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=100
-export NIGHTHAWK_TARGET="https://127.0.0.1:13333"
+export LOAD_RPS=500
+export LOAD_DURATION=120
+export LOAD_MAX_REQUEST_PER_CONNECTION=100
+export LOAD_TARGET="https://127.0.0.1:13333"
 export ENVOY_CPU_SET=13-16
 export ENVOY_CONCURRENCY=4
 export ENVOY_CONFIG=./envoy-sni-http.yaml
@@ -48,7 +48,7 @@ echo "Begin to test $rps rps"
 bash ./benchmark-envoy.sh
 
 #for rps in `seq 500 100 2500`; do
-#    export NIGHTHAWK_RPS=$rps
+#    export LOAD_RPS=$rps
 #    export BASE_DIR=$RESULT_BASE_DIR/${rps}_rps
 #    echo "Begin to test $rps rps"
 #    bash ./benchmark-envoy.sh

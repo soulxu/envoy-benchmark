@@ -14,20 +14,20 @@
 
 export ENVOY_CONFIG=./envoy-http.yaml
 
-export NIGHTHAWK_REQUEST_BODY_SIZE=${NIGHTHAWK_REQUEST_BODY_SIZE:=0}
-export NIGHTHAWK_REQUEST_METHOD=${NIGHTHAWK_REQUEST_METHOD:=GET}
-export NIGHTHAWK_RPS=500
-export NIGHTHAWK_DURATION=60
-#export NIGHTHAWK_CONNECTIONS=${NIGHTHAWK_CONNECTIONS:=}
-#export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION:=}
-#export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=10
-#export NIGHTHAWK_TARGET="http://127.0.0.1:13333"
+export LOAD_REQUEST_BODY_SIZE=${LOAD_REQUEST_BODY_SIZE:=0}
+export LOAD_REQUEST_METHOD=${LOAD_REQUEST_METHOD:=GET}
+export LOAD_RPS=500
+export LOAD_DURATION=60
+#export LOAD_CONNECTIONS=${LOAD_CONNECTIONS:=}
+#export LOAD_MAX_REQUEST_PER_CONNECTION=${LOAD_MAX_REQUEST_PER_CONNECTION:=}
+#export LOAD_MAX_REQUEST_PER_CONNECTION=10
+#export LOAD_TARGET="http://127.0.0.1:13333"
 export ENVOY_CPU_SET=15
 export ENVOY_CONCURRENCY=1
 export ENVOY_CONFIG=./envoy-http.yaml
-export NIGHTHAWK_CPU_SET=20,21,22,23
-export FORTIO_CPU_SET=24,25,26,27,28,29,30,31
-export NIGHTHAWK_OTHER_OPT=--h2
+export LOAD_CPU_SET=20,21,22,23
+export BACKEND_CPU_SET=24,25,26,27,28,29,30,31
+export LOAD_OTHER_OPT=--h2
 
 
 
@@ -40,7 +40,7 @@ export NIGHTHAWK_OTHER_OPT=--h2
 # for cons in `seq 1 50 300`; do
     
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/managed_storage
-#     export NIGHTHAWK_CONNECTIONS=$cons
+#     export LOAD_CONNECTIONS=$cons
 #     echo "Begin to test managed_storage"
 #     bash ./benchmark-envoy.sh
 # done
@@ -50,7 +50,7 @@ export NIGHTHAWK_OTHER_OPT=--h2
 
 
 # test max memory allocation by body size
-# export NIGHTHAWK_CONNECTIONS=50
+# export LOAD_CONNECTIONS=50
 # SUITE_DIR=./benchmark_max_memory_allocation_h2/max_memory_allocation_by_body_size
 # RESULT_BASE_DIR=$SUITE_DIR/results
 # mkdir -p $RESULT_BASE_DIR
@@ -58,7 +58,7 @@ export NIGHTHAWK_OTHER_OPT=--h2
 
 # for body_size in 1024 10240 20480 40960 81920 524288 1048576 2097152; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$body_size/managed_storage
-#     export NIGHTHAWK_REQUEST_BODY_SIZE=$body_size
+#     export LOAD_REQUEST_BODY_SIZE=$body_size
 #     echo "Begin to test managed_storage $body_size"
 #     bash ./benchmark-envoy.sh
 # done
@@ -67,12 +67,12 @@ export NIGHTHAWK_OTHER_OPT=--h2
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-base_with_cache_count
 # for body_size in 1024 10240 20480 40960 81920 524288 1048576 2097152; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$body_size/base_with_cache_count
-#     export NIGHTHAWK_REQUEST_BODY_SIZE=$body_size
+#     export LOAD_REQUEST_BODY_SIZE=$body_size
 #     echo "Begin to test managed_storage $body_size"
 #     bash ./benchmark-envoy.sh
 # done
 
-export NIGHTHAWK_CONNECTIONS=50
+export LOAD_CONNECTIONS=50
 SUITE_DIR=./benchmark_max_memory_allocation_h2/max_memory_allocation_by_body_size
 RESULT_BASE_DIR=$SUITE_DIR/results
 mkdir -p $RESULT_BASE_DIR
@@ -80,7 +80,7 @@ export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-managed_storage_opti
 
 for body_size in 131072 196608 262144; do
     export BASE_DIR=$RESULT_BASE_DIR/$body_size/managed_storage
-    export NIGHTHAWK_REQUEST_BODY_SIZE=$body_size
+    export LOAD_REQUEST_BODY_SIZE=$body_size
     echo "Begin to test managed_storage $body_size"
     bash ./benchmark-envoy.sh
 done
@@ -89,7 +89,7 @@ done
 export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-base_with_cache_count
 for body_size in 131072 196608 262144; do
     export BASE_DIR=$RESULT_BASE_DIR/$body_size/base_with_cache_count
-    export NIGHTHAWK_REQUEST_BODY_SIZE=$body_size
+    export LOAD_REQUEST_BODY_SIZE=$body_size
     echo "Begin to test managed_storage $body_size"
     bash ./benchmark-envoy.sh
 done
@@ -99,18 +99,18 @@ done
 
 
 # Test with 80kb payload and variable is connections.
-# export NIGHTHAWK_RPS=1000
-# export NIGHTHAWK_CONNECTIONS=50
+# export LOAD_RPS=1000
+# export LOAD_CONNECTIONS=50
 # SUITE_DIR=./benchmark_max_memory_allocation_h2/max_memory_allocation_by_cons_with_80k_payload
 # RESULT_BASE_DIR=$SUITE_DIR/results
 # mkdir -p $RESULT_BASE_DIR
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-managed_storage_optimize_with_cache_count
-# export NIGHTHAWK_REQUEST_BODY_SIZE=81920
+# export LOAD_REQUEST_BODY_SIZE=81920
 
 # #10 50 100 150 200
 # for cons in 10; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/managed_storage
-#     export NIGHTHAWK_CONNECTIONS=$cons
+#     export LOAD_CONNECTIONS=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done
@@ -118,25 +118,25 @@ done
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-base_with_cache_count
 # for cons in 10; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/base_with_cache_count
-#     export NIGHTHAWK_CONNECTIONS=$cons
+#     export LOAD_CONNECTIONS=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done
 
 ##############################################
 
-# export NIGHTHAWK_RPS=1000
-# export NIGHTHAWK_CONNECTIONS=50
+# export LOAD_RPS=1000
+# export LOAD_CONNECTIONS=50
 # SUITE_DIR=./benchmark_max_memory_allocation_h2/max_memory_allocation_by_max_req_pre_cons_with_80k_payload
 # RESULT_BASE_DIR=$SUITE_DIR/results
 # mkdir -p $RESULT_BASE_DIR
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-managed_storage_optimize_with_cache_count
-# export NIGHTHAWK_REQUEST_BODY_SIZE=81920
+# export LOAD_REQUEST_BODY_SIZE=81920
 
 # #10 50 100 150 200
 # for cons in 10 50 100 150 200; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/managed_storage
-#     export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=$cons
+#     export LOAD_MAX_REQUEST_PER_CONNECTION=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done
@@ -144,7 +144,7 @@ done
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-base_with_cache_count
 # for cons in 10 50 100 150 200; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/base_with_cache_count
-#     export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=$cons
+#     export LOAD_MAX_REQUEST_PER_CONNECTION=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done
@@ -152,18 +152,18 @@ done
 
 ##############################################
 
-# export NIGHTHAWK_RPS=1000
-# export NIGHTHAWK_CONNECTIONS=50
+# export LOAD_RPS=1000
+# export LOAD_CONNECTIONS=50
 # SUITE_DIR=./benchmark_max_memory_allocation_h2/max_memory_allocation_by_max_req_pre_cons_with_512k_payload
 # RESULT_BASE_DIR=$SUITE_DIR/results
 # mkdir -p $RESULT_BASE_DIR
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-managed_storage_optimize_with_cache_count
-# export NIGHTHAWK_REQUEST_BODY_SIZE=524288
+# export LOAD_REQUEST_BODY_SIZE=524288
 
 #10 50 100 150 200
 # for cons in 10 50 100 150 200; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/managed_storage
-#     export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=$cons
+#     export LOAD_MAX_REQUEST_PER_CONNECTION=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done
@@ -171,7 +171,7 @@ done
 # export ENVOY_BIN=./benchmark_max_memory_allocation_h2/envoy-base_with_cache_count
 # for cons in 10 50 100 150 200; do
 #     export BASE_DIR=$RESULT_BASE_DIR/$cons/base_with_cache_count
-#     export NIGHTHAWK_MAX_REQUEST_PER_CONNECTION=$cons
+#     export LOAD_MAX_REQUEST_PER_CONNECTION=$cons
 #     echo "Begin to test managed_storage $cons"
 #     bash ./benchmark-envoy.sh
 # done

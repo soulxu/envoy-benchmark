@@ -43,7 +43,7 @@ echo "Update benchmark script to ENVOY and FORTIO host"
 
 # separate cpuset between the client and envoy
 export CPU_SET=18-35 #,36-53 # 8 cpu pinning
-export FORTIO_CPU_SET=18-35,36-53
+export BACKEND_CPU_SET=18-35,36-53
 #export ENVOY_CPU_SET=13-17
 export ENVOY_CPU_SET=62-71
 export ENVOY_CONCURRENCY=8

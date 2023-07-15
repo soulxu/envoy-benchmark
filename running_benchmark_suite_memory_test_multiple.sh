@@ -32,6 +32,6 @@ for body_size in `seq 0 64 2048`; do
     echo "The body size is ${body_size}"
     export SUITE_DIR="${RESULT_MULTIPLE_BASE_DIR}/${body_size}"
     mkdir -p $SUITE_DIR
-    export NIGHTHAWK_REQUEST_BODY_SIZE=$body_size
+    export LOAD_REQUEST_BODY_SIZE=$body_size
     bash ./running_benchmark_suite_memory_test.sh
 done
