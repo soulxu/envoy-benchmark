@@ -6,11 +6,18 @@ set -e
 #echo "" > ./running_data.sh
 export BASE_DIR=${BASE_DIR:=./result}
 
+LOAD_CLIENT=${LOAD_CLIENT:=fortio}
+BACK_SERVER=${BACK_SERVER:=fortio}
+
 # Running fortio server
 export FORTIO_CPU_SET=${FORTIO_CPU_SET:=54-61}
-echo "start fortio server on $FORTIO_HOST"
+echo "start backend server $BACK_SERVER on $FORTIO_HOST"
 # ssh -i $SSH_KEY hejiexu@$FORTIO_HOST "cd /home/hejiexu/cpu-affinity-benchmark; PATH=$PATH:/home/hejiexu/go/bin FORTIO_CPU_SET=$FORTIO_CPU_SET bash ./fortio-server.sh"
-bash -x ./fortio-server.sh
+if [ $BACK_SERVER = "fortio" ]; then
+    bash -x ./fortio-server.sh
+elif [ $BACK_SERVER = "nighthawk" ]; then
+    bash -x ./nighthawk-server.sh
+fi
 
 # Running envoy
 export ENVOY_CPU_SET=${ENVOY_CPU_SET:=13-16} # 5 cpu pinning, 4 for worker threads, 1 for main thread
@@ -34,10 +41,13 @@ export NIGHTHAWK_DURATION=${NIGHTHAWK_DURATION:=10}
 #export NIGHTHAWK_RPS_INCREASE=${NIGHTHAWK_RPS_INCREASE:=5000}
 #export NIGHTHAWK_RPS_END=${NIGHTHAWK_RPS_END:=10000}
 
+export MPSTAT_INTERVAL=${MPSTAT_INTERVAL:=2}
+mpstat -P ${ENVOY_CPU_SET} $MPSTAT_INTERVAL `expr $NIGHTHAWK_DURATION / $MPSTAT_INTERVAL` > ${BASE_DIR}/mpstat.txt &
+
 mkdir -p $BASE_DIR
-if [ $CLIENT = "nh" ]; then
+if [ $LOAD_CLIENT = "nighthawk" ]; then
     bash -x ./nighthawk-client.sh
-else
+elif [ $LOAD_CLIENT = "fortio"]; then
     bash -x ./fortio_client.sh
 fi
 

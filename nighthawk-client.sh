@@ -18,7 +18,7 @@ NIGHTHAWK_MAX_ACTIVE_REQUESTS=${NIGHTHAWK_MAX_ACTIVE_REQUESTS:=100}
 #    --rps $NIGHTHAWK_RPS $NIGHTHAWK_OTHER_OPT --connections $NIGHTHAWK_CONNECTIONS --duration $NIGHTHAWK_DURATION --concurrency $NIGHTHAWK_CONCURRENCY -v info $NIGHTHAWK_TRANSPORT_OPT --request-body-size ${NIGHTHAWK_REQUEST_BODY_SIZE} --request-method $NIGHTHAWK_REQUEST_METHOD --max-requests-per-connection ${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION} \
 #    --timeout 120 --output-format fortio $NIGHTHAWK_TARGET > ${BASE_DIR}/nighthawk_result.json
 
-taskset -c $NIGHTHAWK_CPU_SET /home/xhj/nighthawk/bazel-bin/nighthawk_client \
+taskset -c $NIGHTHAWK_CPU_SET ./nighthawk_client \
     --rps $NIGHTHAWK_RPS $NIGHTHAWK_OTHER_OPT --connections $NIGHTHAWK_CONNECTIONS --duration $NIGHTHAWK_DURATION --concurrency $NIGHTHAWK_CONCURRENCY -v info $NIGHTHAWK_TRANSPORT_OPT --request-body-size ${NIGHTHAWK_REQUEST_BODY_SIZE} --request-method $NIGHTHAWK_REQUEST_METHOD --max-requests-per-connection ${NIGHTHAWK_MAX_REQUEST_PER_CONNECTION} \
     --timeout 120 --max-active-requests ${NIGHTHAWK_MAX_ACTIVE_REQUESTS} $NIGHTHAWK_TARGET > ${BASE_DIR}/nighthawk_result.json
 
