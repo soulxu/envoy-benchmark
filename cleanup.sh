@@ -7,10 +7,12 @@ echo "Kill envoy on $ENVOY_HOST"
 #ssh -i $SSH_KEY hejiexu@$ENVOY_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`cat ./envoy.pid\`"'
 #ssh -i $SSH_KEY hejiexu@$ENVOY_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`pgrep envoy\`"'
 kill -SIGINT `pgrep envoy`
-#if [ $PERF_ENABLED = 1 ]; then
-    #sleep 3
-    #sudo kill -SIGINT `pgrep perf`
-#fi
+if [ $PERF_ENABLED = 1 ]; then
+    if [ $PERF_TOOL = perf ]; then
+        sleep 3
+        sudo kill -SIGINT `pgrep perf`
+    fi
+fi
 echo "Kill backserver $BACK_SERVER on $FORTIO_HOST"
 #ssh -i $SSH_KEY hejiexu@$FORTIO_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`cat ./fortio.pid\`"'
 #ssh -i $SSH_KEY hejiexu@$FORTIO_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`pgrep fortio\`"'

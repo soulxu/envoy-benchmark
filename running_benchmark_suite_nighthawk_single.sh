@@ -24,6 +24,7 @@ export BACKEND_SERVER_PORT=13334
 export TIMES=1
 
 export PERF_ENABLED=1
+export PERF_TOOL=perf
 
 for bin in `ls $BIN_DIR`; do
     export ENVOY_BIN=$BIN_DIR/$bin
@@ -31,17 +32,17 @@ for bin in `ls $BIN_DIR`; do
     echo -n "" > $SUITE_DIR/${bin}/test.result
     echo -n "" > $SUITE_DIR/${bin}/test_99.result
     echo -n "" > $SUITE_DIR/${bin}/test_999.result
-    for rps in `seq 100 200 1200`; do
+    for rps in `seq 300 200 300`; do
         for i in `seq 1 1 $TIMES`; do
             export BASE_DIR=$SUITE_DIR/$bin/$rps/$i
             export LOAD_RPS=${rps}
             echo "Begin to test ${BASE_DIR}"
             bash ./benchmark-envoy.sh
-            #pushd $BASE_DIR
-            #sleep 3
-            #sudo perf script | c++filt | gprof2dot -f perf | dot -Tpng -o output.png
-            #popd
-            pprof -output $BASE_DIR/envoy.png -png $ENVOY_BIN $BASE_DIR/envoy.cpuprof
+            sleep 3
+            sudo chown hejiexu:hejiexu $BASE_DIR/perf.data
+            perf script --input=$BASE_DIR/perf.data | benchmark_tools/FlameGraph/stackcollapse-perf.pl > out.perf-folded
+            benchmark_tools/FlameGraph/flamegraph.pl out.perf-folded > $BASE_DIR/perf.svg
+            # pprof -output $BASE_DIR/envoy.png -png $ENVOY_BIN $BASE_DIR/envoy.cpuprof
             # catch the mean latency of "Request start to response end"
             echo "$rps $i `cat ${BASE_DIR}/nighthawk_result.result |grep "min:"| awk -F '|' 'NR == 3 {print $2}'`" >> $SUITE_DIR/$bin/test.result
             echo "$rps $i `cat ${BASE_DIR}/nighthawk_result.result |grep "0.990"| awk 'NR == 3 {print $3 $4 $5}'`" >> $SUITE_DIR/$bin/test_99.result

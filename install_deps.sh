@@ -20,4 +20,7 @@ pushd wrk
 make
 popd
 
+# flamegraph
+git clone https://github.com/brendangregg/FlameGraph
+
 popd
