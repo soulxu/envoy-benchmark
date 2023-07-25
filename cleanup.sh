@@ -17,8 +17,9 @@ echo "Kill backserver $BACK_SERVER on $FORTIO_HOST"
 #ssh -i $SSH_KEY hejiexu@$FORTIO_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`cat ./fortio.pid\`"'
 #ssh -i $SSH_KEY hejiexu@$FORTIO_HOST 'bash -c "cd /home/hejiexu/cpu-affinity-benchmark; kill -9 \`pgrep fortio\`"'
 if [ $BACK_SERVER = "nighthawk" ]; then
-kill -9 `pgrep nighthawk_test_server`
-elif [ $BACK_SERVER = "nighthawk" ]; then
+#kill -9 `pgrep nighthawk_test_server`
+kill -9 `ps -ax|grep nighthawk_test_server`
+elif [ $BACK_SERVER = "fortio" ]; then
 kill -9 `pgrep fortio`
 fi
 

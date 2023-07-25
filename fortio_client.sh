@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 set -x
+
 BASE_DIR=${BASE_DIR:=./}
 LOAD_CPU_SET=${LOAD_CPU_SET:=0-47}
 LOAD_CONNECTIONS=${LOAD_CONNECTIONS:=64}

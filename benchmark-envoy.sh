@@ -44,6 +44,7 @@ export LOAD_CPU_SET=${LOAD_CPU_SET:=40-43} # 4 cpu pinning
 export LOAD_CONCURRENCY=${LOAD_CONCURRENCY:=4}
 export LOAD_RPS=${LOAD_RPS:=5000}
 export LOAD_DURATION=${LOAD_DURATION:=10}
+export LOAD_CONNECTIONS=${LOAD_CONNECTIONS:=64}
 
 echo "start mpstat to collect the CPU stats"
 export MPSTAT_INTERVAL=${MPSTAT_INTERVAL:=2}
