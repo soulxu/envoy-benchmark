@@ -23,6 +23,7 @@ if [ $BACK_SERVER = "nighthawk" ]; then
 kill -9 `cat nighthawk_test_server.pid`
 elif [ $BACK_SERVER = "fortio" ]; then
 #kill -9 `pgrep fortio`
-kill -9 `cat fortio.pid`
+kill -9 `cat fortio.pid` || true
 fi
 
+sleep 10

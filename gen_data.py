@@ -27,7 +27,7 @@ elif sys.argv[2] == "ngavg":
         latency_ms = int(line.split('ms')[0].split('s')[1].lstrip(' '))
         latecy = latency_ms * 1000 + latency_us
         results.append(latecy)
-        if times == 10:
+        if times == 3:
             results.remove(max(results))
             results.remove(min(results))
             print("{} {}".format(rps, sum(results)/len(results)))
@@ -36,16 +36,31 @@ elif sys.argv[2] == "ngp99":
     results = []
     for line in f.readlines():
         rps = int(line.split()[0])
-        times = int(line.split()[1])
         latency_us = int(line.split('ms')[1].lstrip(' ')[0:3])
         latency_ms = int(line.split('ms')[0].split('s')[1].lstrip(' '))
         latecy = latency_ms * 1000 + latency_us
         results.append(latecy)
-        if times == 10:
-            results.remove(max(results))
-            results.remove(min(results))
-            print("{} {}".format(rps, sum(results)/len(results)))
-            results = []
+        print(latecy)
+elif sys.argv[2] == "ngthroughput":
+    tp_results = []
+    cpu_results = []
+    for line in f.readlines():
+        throughput = line.split()[4]
+        cpu = 100 - float(line.split()[5])
+        tp_results.append(throughput)
+        cpu_results.append(cpu)
+    print("cpu")
+    for cpu in cpu_results:
+        print(cpu)
+    print("tp")
+    for tp in tp_results:
+        print(tp)
+        # if times == 3:
+        #     results.remove(max(results))
+        #     results.remove(min(results))
+        #     print("{} {}".format(rps, sum(results)/len(results)))
+        #     results = []
+
 # results = []
 # for line in f.readlines():
 #     next_rps = line.split()[0]

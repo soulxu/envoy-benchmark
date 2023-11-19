@@ -15,20 +15,18 @@ export LOAD_MODE=open
 
 export LOAD_CPU_SET=3-9
 export BACKEND_CPU_SET=10-22
-export ENVOY_CPU_SET=1
+export ENVOY_CPU_SET=32
 
 export ENVOY_CONFIG=./envoy-iouring.yaml
 export ENVOY_CONCURRENCY=1
 export BACKEND_SERVER_PORT=13334
 
-export TIMES=1
-
 ###############################
 
-export SUITE_DIR=./5times/iouring-load-fortio-back-nighthawk
+export SUITE_DIR=./1times-with-ht/iouring-load-fortio-back-nighthawk
 #export SUITE_DIR=./improve/iouring-load-fortio-back-nighthawk
 export LOAD_CONNECTIONS=64
-export TIMES=5
+export TIMES=1
 export LOAD_CLIENT="fortio"
 export BACK_SERVER="nighthawk"
 export PERF_ENABLED=0

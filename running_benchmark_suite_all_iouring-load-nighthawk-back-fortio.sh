@@ -1,14 +1,14 @@
 set -e
 
 # All test result is under $SUITE_DIR/result
-export SUITE_DIR=./5times/iouring-load-nighthawk-back-fortio
+export SUITE_DIR=${SUITE_DIR:=./1times-with-ht/iouring-load-nighthawk-back-fortio}
 #export SUITE_DIR=./improve/iouring-load-nighthawk-back-fortio
 echo $SUITE_DIR
 
 export BIN_DIR="./bin"
 export LOAD_CLIENT="nighthawk"
 export BACK_SERVER="fortio"
-export LOAD_TARGET="http://127.0.0.1:13333/?size=4096:100"
+export LOAD_TARGET=${LOAD_TARGET:="http://127.0.0.1:13333/?size=4096:100"}
 export LOAD_REQUEST_BODY_SIZE=0
 export LOAD_CONNECTIONS=32
 export LOAD_DURATION=60
@@ -16,13 +16,13 @@ export LOAD_MODE=open
 
 export LOAD_CPU_SET=3-9
 export BACKEND_CPU_SET=10-22
-export ENVOY_CPU_SET=1-2
+export ENVOY_CPU_SET=32
 
-export ENVOY_CONFIG=./envoy-iouring.yaml
+export ENVOY_CONFIG=${ENVOY_CONFIG:=./envoy-iouring.yaml}
 export ENVOY_CONCURRENCY=1
 export BACKEND_SERVER_PORT=13334
 
-export TIMES=5
+export TIMES=1
 export PERF_ENABLED=0
 
 for bin in `ls $BIN_DIR`; do
@@ -31,7 +31,7 @@ for bin in `ls $BIN_DIR`; do
     echo -n "" > $SUITE_DIR/${bin}/test.result
     echo -n "" > $SUITE_DIR/${bin}/test_99.result
     echo -n "" > $SUITE_DIR/${bin}/test_999.result
-    for rps in `seq 1000 100 2500`; do
+    for rps in `seq 3000 200 5200`; do
         for i in `seq 1 1 $TIMES`; do
             export BASE_DIR=$SUITE_DIR/$bin/$rps/$i
             export LOAD_RPS=${rps}

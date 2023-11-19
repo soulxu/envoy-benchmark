@@ -92,7 +92,7 @@ echo "LOAD_TRANSPORT_OPT=${LOAD_TRANSPORT_OPT:=}" >> $SUMMARY_FILE
 echo "LOAD_OTHER_OPT=${LOAD_OTHER_OPT}" >> $SUMMARY_FILE
 
 # collect envoy stats
-curl 127.0.0.1:9901/stats > $BASE_DIR/envoy_stats.txt
+curl http://127.0.0.1:9901/stats > $BASE_DIR/envoy_stats.txt
 
 bash ./cleanup.sh
 

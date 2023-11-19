@@ -22,6 +22,9 @@ static_resources:
           "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
           stat_prefix: ingress_http
           generate_request_id: false
+          codec_type: HTTP1
+          # http2_protocol_options:
+          #   allow_metadata: true
           route_config:
             name: local_route
             virtual_hosts:
@@ -47,35 +50,42 @@ static_resources:
             # tls_params:
             #   tls_minimum_protocol_version: TLSv1_3
             tls_certificates:
-            - private_key:
-                inline_string: |
-                  -----BEGIN RSA PRIVATE KEY-----
-                  MIIEpAIBAAKCAQEAtj254zFKG42zdjar6yfPHDJHdM8/RgkzP3SUUsDwFToZ5Jba
-                  bCYF2kFsg4DS+LgZ8IlBs5p7+jpLk8kFRf6T1AI3sSGouZXBdhj8eVHlERr4ip/q
-                  tEizPHUiOuRx9TJhVZgj63iFwNf/xQcdGcrC3a1E7BeM0G2CAtXNentriZwYKvv+
-                  SILPhD57pRjdCvCCTJbE04VlOBlsjvbNDfgHadZwA6RJC1WhJjMEtoQ2NDcTr9NV
-                  DSQvBgU3bhLQULPyYvdyH+xHWWLze8q5RlA5yIrOVBUCCr1KXmOrpidLK0Zk9h5Y
-                  lZe/yVMOefz7/FynaX6q+4sMLDOaCLaKbA4aoQIDAQABAoIBABMA6MtqLmIlKpuf
-                  I9pHsm8sRwtFOUHiX7e0PmtKtz5faqfNm0U/ychynhAwdM9+0yWkCnfiGh+DyLHG
-                  eohL/bpT6N7Ntbx0g1H/VQSJp6ta9qPt/RmDoz0gscsWW1PIRyIX1VcOoFP1sjQn
-                  g79Wx286TD+aTRLG+JG3HdAx4orc0PP9Da0p9MOuY8ARmS/Xz4ngK7PfNstlDyG7
-                  jINtNxGT1wfhR9sdh1ukBUOfKWUMixBEk+5CPSiTcBFYqRCfMb92wb2wR0BJ5250
-                  etC6sFefPz6tyQbwqNhStJ9DkyqZRKhdRXAimWVggs0DvMn9U5P3R9sEYykTyV7t
-                  AmAfkUkCgYEAyG3R/r1RrrKLjn3BJSuLPuRNjeim8jKNEXpV6muLAUnnnl8vxo4Q
-                  XJCJTptBC0Po2LC7SVDdG1EApICYtwa7dUiQtPjZO7pCNr5i/meKfHyNXrpV2l0X
-                  ZSCJDjaksi2qCpTVRPlSe03824zTYAamIkfDR8VMthUrCvzSFLb76t8CgYEA6MT0
-                  l9jSge2s9ED9UXqEOm3EGSw9Rb9aqhdM0P3pq+RWfBhE3uzZSojM0JEFGKaDHpJT
-                  AARE2enjgqQHToI5us/plAFQcbc1bO/nfr1NTbri4cfbyQcdGbkwNmwhorlEk0H4
-                  xTEiX2D38YoZSLwFRtNCUwSjPwjpwARi4Az0Kn8CgYEAthRWbnZsyyj2cTc7DNp3
-                  AGaFMgMGDwbvcs5RWMnkGQKbwRs2GsoagQzpQBj4yRQjZx9+tQcaJuO6krckhTk/
-                  eTe4Bj//kSwPVQ42fmlvvNGl2EWtEtf5FeyttdTcX+XuEPjOmn9peA0MRiO0Lws7
-                  R+8rr3rEyrGGTdAJxbnKN78CgYA65QqWGRA6O67VJlRx9zPZrMg/Lkhai24fN0IC
-                  Zxxml6GiSGm0lezsxOw9oVPOxuLKK2/Aw1PAZ0NfXK1UmfKNZ+nLvwFhpF9qLtE9
-                  6hvTHQQm6HCdzqT4Szj9rCJej83gDIMrMaFmzJwviyeWlawoHW/cnYHIgzLRmMqD
-                  sgNddQKBgQCKFFF5FMUjosEOHJg6OxQj1wEyJ+X6Vjs345qAG3AqIwX8AB4xFTFK
-                  WfhCC4t4bU71kkbLMm6QDLGd5YnuKDcEw6Y2uJFZSsvrdRddUbOHZA5WQBRsnDmG
-                  l8ctiwUVrhRE67c5V8ve0hgFBnUFtXAcOSfYKRqqA6n8ZFYeyh1g3g==
-                  -----END RSA PRIVATE KEY-----
+            - private_key_provider:
+                  provider_name: qat
+                  typed_config:  
+                    "@type": "type.googleapis.com/envoy.extensions.private_key_providers.qat.v3alpha.QatPrivateKeyMethodConfig"
+                    private_key:
+                      inline_string: |
+                        -----BEGIN RSA PRIVATE KEY-----
+                        MIIEpAIBAAKCAQEAtj254zFKG42zdjar6yfPHDJHdM8/RgkzP3SUUsDwFToZ5Jba
+                        bCYF2kFsg4DS+LgZ8IlBs5p7+jpLk8kFRf6T1AI3sSGouZXBdhj8eVHlERr4ip/q
+                        tEizPHUiOuRx9TJhVZgj63iFwNf/xQcdGcrC3a1E7BeM0G2CAtXNentriZwYKvv+
+                        SILPhD57pRjdCvCCTJbE04VlOBlsjvbNDfgHadZwA6RJC1WhJjMEtoQ2NDcTr9NV
+                        DSQvBgU3bhLQULPyYvdyH+xHWWLze8q5RlA5yIrOVBUCCr1KXmOrpidLK0Zk9h5Y
+                        lZe/yVMOefz7/FynaX6q+4sMLDOaCLaKbA4aoQIDAQABAoIBABMA6MtqLmIlKpuf
+                        I9pHsm8sRwtFOUHiX7e0PmtKtz5faqfNm0U/ychynhAwdM9+0yWkCnfiGh+DyLHG
+                        eohL/bpT6N7Ntbx0g1H/VQSJp6ta9qPt/RmDoz0gscsWW1PIRyIX1VcOoFP1sjQn
+                        g79Wx286TD+aTRLG+JG3HdAx4orc0PP9Da0p9MOuY8ARmS/Xz4ngK7PfNstlDyG7
+                        jINtNxGT1wfhR9sdh1ukBUOfKWUMixBEk+5CPSiTcBFYqRCfMb92wb2wR0BJ5250
+                        etC6sFefPz6tyQbwqNhStJ9DkyqZRKhdRXAimWVggs0DvMn9U5P3R9sEYykTyV7t
+                        AmAfkUkCgYEAyG3R/r1RrrKLjn3BJSuLPuRNjeim8jKNEXpV6muLAUnnnl8vxo4Q
+                        XJCJTptBC0Po2LC7SVDdG1EApICYtwa7dUiQtPjZO7pCNr5i/meKfHyNXrpV2l0X
+                        ZSCJDjaksi2qCpTVRPlSe03824zTYAamIkfDR8VMthUrCvzSFLb76t8CgYEA6MT0
+                        l9jSge2s9ED9UXqEOm3EGSw9Rb9aqhdM0P3pq+RWfBhE3uzZSojM0JEFGKaDHpJT
+                        AARE2enjgqQHToI5us/plAFQcbc1bO/nfr1NTbri4cfbyQcdGbkwNmwhorlEk0H4
+                        xTEiX2D38YoZSLwFRtNCUwSjPwjpwARi4Az0Kn8CgYEAthRWbnZsyyj2cTc7DNp3
+                        AGaFMgMGDwbvcs5RWMnkGQKbwRs2GsoagQzpQBj4yRQjZx9+tQcaJuO6krckhTk/
+                        eTe4Bj//kSwPVQ42fmlvvNGl2EWtEtf5FeyttdTcX+XuEPjOmn9peA0MRiO0Lws7
+                        R+8rr3rEyrGGTdAJxbnKN78CgYA65QqWGRA6O67VJlRx9zPZrMg/Lkhai24fN0IC
+                        Zxxml6GiSGm0lezsxOw9oVPOxuLKK2/Aw1PAZ0NfXK1UmfKNZ+nLvwFhpF9qLtE9
+                        6hvTHQQm6HCdzqT4Szj9rCJej83gDIMrMaFmzJwviyeWlawoHW/cnYHIgzLRmMqD
+                        sgNddQKBgQCKFFF5FMUjosEOHJg6OxQj1wEyJ+X6Vjs345qAG3AqIwX8AB4xFTFK
+                        WfhCC4t4bU71kkbLMm6QDLGd5YnuKDcEw6Y2uJFZSsvrdRddUbOHZA5WQBRsnDmG
+                        l8ctiwUVrhRE67c5V8ve0hgFBnUFtXAcOSfYKRqqA6n8ZFYeyh1g3g==
+                        -----END RSA PRIVATE KEY-----
+                    poll_delay:
+                      nanos: 1000000
+                      #seconds: 1
               certificate_chain:
                 inline_string: |
                   -----BEGIN CERTIFICATE-----
