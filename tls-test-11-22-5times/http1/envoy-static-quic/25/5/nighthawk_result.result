@@ -1,0 +1,92 @@
+Nighthawk - A layer 7 protocol benchmarking tool.
+
+benchmark_http_client.latency_2xx (180242 samples)
+  min: 0s 000ms 298us | mean: 0s 015ms 950us | max: 0s 089ms 407us | pstdev: 0s 011ms 793us
+
+  Percentile  Count       Value          
+  0.5         90121       0s 012ms 228us 
+  0.75        135182      0s 026ms 397us 
+  0.8         144203      0s 027ms 298us 
+  0.9         162223      0s 029ms 219us 
+  0.95        171236      0s 032ms 079us 
+  0.990625    178554      0s 034ms 981us 
+  0.99902344  180066      0s 083ms 365us 
+
+Queueing and connection setup latency (180249 samples)
+  min: 0s 001ms 491us | mean: 0s 010ms 743us | max: 0s 039ms 102us | pstdev: 0s 004ms 185us
+
+  Percentile  Count       Value          
+  0.5         90126       0s 010ms 968us 
+  0.75        135189      0s 014ms 061us 
+  0.8         144200      0s 014ms 596us 
+  0.9         162225      0s 015ms 413us 
+  0.95        171238      0s 015ms 805us 
+  0.990625    178560      0s 016ms 870us 
+  0.99902344  180073      0s 031ms 469us 
+
+Request start to response end (180242 samples)
+  min: 0s 000ms 293us | mean: 0s 015ms 948us | max: 0s 089ms 407us | pstdev: 0s 011ms 793us
+
+  Percentile  Count       Value          
+  0.5         90122       0s 012ms 227us 
+  0.75        135187      0s 026ms 396us 
+  0.8         144197      0s 027ms 296us 
+  0.9         162220      0s 029ms 217us 
+  0.95        171232      0s 032ms 077us 
+  0.990625    178553      0s 034ms 973us 
+  0.99902344  180066      0s 083ms 365us 
+
+Response body size in bytes (180242 samples)
+  min: 0 | mean: 0 | max: 0 | pstdev: 0
+
+Response header size in bytes (180242 samples)
+  min: 99 | mean: 99.28834566860107 | max: 100 | pstdev: 0.4529927637392067
+
+Blocking. Results are skewed when significant numbers are reported here. (104854 samples)
+  min: 0s 000ms 499us | mean: 0s 016ms 645us | max: 0s 034ms 332us | pstdev: 0s 001ms 669us
+
+  Percentile  Count       Value          
+  0.5         52428       0s 016ms 613us 
+  0.75        78672       0s 016ms 977us 
+  0.8         83901       0s 017ms 075us 
+  0.9         94370       0s 017ms 370us 
+  0.95        99614       0s 017ms 771us 
+  0.990625    103871      0s 024ms 762us 
+  0.99902344  104752      0s 031ms 660us 
+
+Initiation to completion (230217 samples)
+  min: 0s 000ms 020us | mean: 0s 021ms 002us | max: 0s 121ms 356us | pstdev: 0s 016ms 507us
+
+  Percentile  Count       Value          
+  0.5         115124      0s 016ms 550us 
+  0.75        172666      0s 036ms 800us 
+  0.8         184186      0s 038ms 873us 
+  0.9         207206      0s 042ms 672us 
+  0.95        218711      0s 044ms 363us 
+  0.990625    228061      0s 046ms 993us 
+  0.99902344  229993      0s 109ms 264us 
+
+Counter                                 Value       Per second
+benchmark.http_2xx                      180242      1502.02
+benchmark.pool_overflow                 49975       416.46
+cluster_manager.cluster_added           25          0.21
+default.total_match_count               25          0.21
+membership_change                       25          0.21
+runtime.load_success                    1           0.01
+runtime.override_dir_not_exists         1           0.01
+ssl.ciphers.TLS_AES_128_GCM_SHA256      180249      1502.07
+ssl.curves.X25519                       180249      1502.07
+ssl.handshake                           180249      1502.07
+ssl.sigalgs.rsa_pss_rsae_sha256         180249      1502.07
+ssl.versions.TLSv1.3                    180249      1502.07
+upstream_cx_destroy                     180242      1502.02
+upstream_cx_destroy_local               180242      1502.02
+upstream_cx_http1_total                 180267      1502.22
+upstream_cx_max_requests                180249      1502.07
+upstream_cx_rx_bytes_total              22401980    186683.14
+upstream_cx_total                       180267      1502.22
+upstream_cx_tx_bytes_total              8471703     70597.51
+upstream_rq_pending_overflow            49975       416.46
+upstream_rq_pending_total               180267      1502.22
+upstream_rq_total                       180249      1502.07
+
