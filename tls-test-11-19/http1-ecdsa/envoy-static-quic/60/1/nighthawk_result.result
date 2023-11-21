@@ -1,0 +1,80 @@
+Nighthawk - A layer 7 protocol benchmarking tool.
+
+benchmark_http_client.latency_2xx (712756 samples)
+  min: 0s 006ms 834us | mean: 0s 011ms 183us | max: 0s 096ms 956us | pstdev: 0s 002ms 695us
+
+  Percentile  Count       Value          
+  0.5         356409      0s 010ms 603us 
+  0.75        534576      0s 011ms 717us 
+  0.8         570262      0s 011ms 944us 
+  0.9         641490      0s 012ms 598us 
+  0.95        677121      0s 014ms 078us 
+  0.990625    706074      0s 027ms 892us 
+  0.99902344  712060      0s 033ms 336us 
+
+Queueing and connection setup latency (712843 samples)
+  min: 0s 003ms 233us | mean: 0s 006ms 438us | max: 0s 067ms 158us | pstdev: 0s 001ms 208us
+
+  Percentile  Count       Value          
+  0.5         356482      0s 006ms 337us 
+  0.75        534641      0s 006ms 784us 
+  0.8         570329      0s 006ms 898us 
+  0.9         641596      0s 007ms 180us 
+  0.95        677215      0s 007ms 517us 
+  0.990625    706163      0s 011ms 790us 
+  0.99902344  712147      0s 015ms 662us 
+
+Request start to response end (712756 samples)
+  min: 0s 006ms 830us | mean: 0s 011ms 181us | max: 0s 096ms 956us | pstdev: 0s 002ms 694us
+
+  Percentile  Count       Value          
+  0.5         356433      0s 010ms 601us 
+  0.75        534593      0s 011ms 716us 
+  0.8         570281      0s 011ms 943us 
+  0.9         641509      0s 012ms 597us 
+  0.95        677121      0s 014ms 076us 
+  0.990625    706075      0s 027ms 891us 
+  0.99902344  712060      0s 033ms 335us 
+
+Response body size in bytes (712756 samples)
+  min: 0 | mean: 0 | max: 0 | pstdev: 0
+
+Response header size in bytes (712756 samples)
+  min: 99 | mean: 99.01349971098114 | max: 100 | pstdev: 0.11540133787988878
+
+Initiation to completion (719913 samples)
+  min: 0s 000ms 022us | mean: 0s 017ms 517us | max: 0s 149ms 913us | pstdev: 0s 004ms 032us
+
+  Percentile  Count       Value          
+  0.5         360118      0s 017ms 173us 
+  0.75        540012      0s 018ms 173us 
+  0.8         575988      0s 018ms 479us 
+  0.9         647953      0s 019ms 406us 
+  0.95        683953      0s 021ms 135us 
+  0.990625    713164      0s 040ms 491us 
+  0.99902344  719212      0s 046ms 548us 
+
+Counter                                 Value       Per second
+benchmark.http_2xx                      712756      5939.58
+benchmark.pool_overflow                 7157        59.64
+cluster_manager.cluster_added           60          0.50
+default.total_match_count               60          0.50
+membership_change                       60          0.50
+runtime.load_success                    1           0.01
+runtime.override_dir_not_exists         1           0.01
+ssl.ciphers.TLS_AES_128_GCM_SHA256      712843      5940.30
+ssl.curves.X25519                       712843      5940.30
+ssl.handshake                           712843      5940.30
+ssl.sigalgs.ecdsa_secp256r1_sha256      712843      5940.30
+ssl.versions.TLSv1.3                    712843      5940.30
+upstream_cx_destroy                     712756      5939.58
+upstream_cx_destroy_local               712756      5939.58
+upstream_cx_http1_total                 712843      5940.30
+upstream_cx_max_requests                712843      5940.30
+upstream_cx_rx_bytes_total              88391366    736587.59
+upstream_cx_total                       712843      5940.30
+upstream_cx_tx_bytes_total              33503621    279194.14
+upstream_rq_pending_overflow            7157        59.64
+upstream_rq_pending_total               712843      5940.30
+upstream_rq_total                       712843      5940.30
+

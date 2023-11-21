@@ -1,0 +1,92 @@
+Nighthawk - A layer 7 protocol benchmarking tool.
+
+benchmark_http_client.latency_2xx (181943 samples)
+  min: 0s 000ms 446us | mean: 0s 028ms 170us | max: 0s 226ms 181us | pstdev: 0s 022ms 913us
+
+  Percentile  Count       Value          
+  0.5         90978       0s 019ms 097us 
+  0.75        136458      0s 025ms 661us 
+  0.8         145555      0s 055ms 570us 
+  0.9         163752      0s 065ms 028us 
+  0.95        172846      0s 068ms 939us 
+  0.990625    180238      0s 113ms 676us 
+  0.99902344  181766      0s 147ms 324us 
+
+Queueing and connection setup latency (181978 samples)
+  min: 0s 001ms 601us | mean: 0s 016ms 028us | max: 0s 106ms 377us | pstdev: 0s 008ms 286us
+
+  Percentile  Count       Value          
+  0.5         90990       0s 014ms 776us 
+  0.75        136484      0s 021ms 612us 
+  0.8         145583      0s 023ms 249us 
+  0.9         163782      0s 026ms 949us 
+  0.95        172881      0s 028ms 657us 
+  0.990625    180272      0s 050ms 044us 
+  0.99902344  181802      0s 056ms 319us 
+
+Request start to response end (181943 samples)
+  min: 0s 000ms 442us | mean: 0s 028ms 169us | max: 0s 226ms 172us | pstdev: 0s 022ms 913us
+
+  Percentile  Count       Value          
+  0.5         90977       0s 019ms 096us 
+  0.75        136460      0s 025ms 660us 
+  0.8         145557      0s 055ms 570us 
+  0.9         163751      0s 065ms 026us 
+  0.95        172852      0s 068ms 939us 
+  0.990625    180238      0s 113ms 676us 
+  0.99902344  181766      0s 147ms 324us 
+
+Response body size in bytes (181943 samples)
+  min: 0 | mean: 0 | max: 0 | pstdev: 0
+
+Response header size in bytes (181943 samples)
+  min: 99 | mean: 99.44078090390943 | max: 101 | pstdev: 0.49679058702964857
+
+Blocking. Results are skewed when significant numbers are reported here. (139013 samples)
+  min: 0s 000ms 885us | mean: 0s 029ms 276us | max: 0s 057ms 741us | pstdev: 0s 003ms 455us
+
+  Percentile  Count       Value          
+  0.5         69576       0s 028ms 264us 
+  0.75        104262      0s 028ms 980us 
+  0.8         111212      0s 029ms 598us 
+  0.9         125113      0s 032ms 458us 
+  0.95        132065      0s 037ms 240us 
+  0.990625    137712      0s 043ms 263us 
+  0.99902344  138878      0s 051ms 222us 
+
+Initiation to completion (271898 samples)
+  min: 0s 000ms 022us | mean: 0s 029ms 677us | max: 0s 271ms 564us | pstdev: 0s 031ms 797us
+
+  Percentile  Count       Value          
+  0.5         136019      0s 027ms 713us 
+  0.75        203927      0s 029ms 803us 
+  0.8         217520      0s 033ms 714us 
+  0.9         244713      0s 088ms 584us 
+  0.95        258305      0s 092ms 475us 
+  0.990625    269352      0s 104ms 009us 
+  0.99902344  271633      0s 195ms 035us 
+
+Counter                                 Value       Per second
+benchmark.http_2xx                      181943      1516.19
+benchmark.pool_overflow                 89955       749.62
+cluster_manager.cluster_added           45          0.37
+default.total_match_count               45          0.37
+membership_change                       45          0.37
+runtime.load_success                    1           0.01
+runtime.override_dir_not_exists         1           0.01
+ssl.ciphers.TLS_AES_128_GCM_SHA256      181978      1516.48
+ssl.curves.X25519                       181978      1516.48
+ssl.handshake                           181978      1516.48
+ssl.sigalgs.rsa_pss_rsae_sha256         181978      1516.48
+ssl.versions.TLSv1.3                    181978      1516.48
+upstream_cx_destroy                     181943      1516.19
+upstream_cx_destroy_local               181943      1516.19
+upstream_cx_http1_total                 181986      1516.55
+upstream_cx_max_requests                181978      1516.48
+upstream_cx_rx_bytes_total              22641129    188675.94
+upstream_cx_total                       181986      1516.55
+upstream_cx_tx_bytes_total              8552966     71274.67
+upstream_rq_pending_overflow            89955       749.62
+upstream_rq_pending_total               181986      1516.55
+upstream_rq_total                       181978      1516.48
+
