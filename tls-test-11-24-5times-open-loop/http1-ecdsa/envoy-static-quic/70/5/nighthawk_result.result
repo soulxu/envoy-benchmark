@@ -1,0 +1,91 @@
+Nighthawk - A layer 7 protocol benchmarking tool.
+
+benchmark_http_client.latency_2xx (729721 samples)
+  min: 0s 005ms 485us | mean: 0s 019ms 323us | max: 0s 097ms 927us | pstdev: 0s 001ms 712us
+
+  Percentile  Count       Value          
+  0.5         364943      0s 019ms 175us 
+  0.75        547332      0s 019ms 988us 
+  0.8         583831      0s 020ms 197us 
+  0.9         656800      0s 020ms 744us 
+  0.95        693253      0s 021ms 414us 
+  0.990625    722883      0s 024ms 079us 
+  0.99902344  729009      0s 036ms 194us 
+
+Queueing and connection setup latency (729842 samples)
+  min: 0s 002ms 803us | mean: 0s 010ms 003us | max: 0s 063ms 293us | pstdev: 0s 001ms 086us
+
+  Percentile  Count       Value          
+  0.5         365035      0s 009ms 877us 
+  0.75        547387      0s 010ms 682us 
+  0.8         583969      0s 010ms 919us 
+  0.9         656933      0s 011ms 369us 
+  0.95        693370      0s 011ms 633us 
+  0.990625    723001      0s 012ms 114us 
+  0.99902344  729130      0s 015ms 588us 
+
+Request start to response end (729721 samples)
+  min: 0s 005ms 484us | mean: 0s 019ms 322us | max: 0s 097ms 923us | pstdev: 0s 001ms 712us
+
+  Percentile  Count       Value          
+  0.5         364968      0s 019ms 174us 
+  0.75        547356      0s 019ms 987us 
+  0.8         583857      0s 020ms 196us 
+  0.9         656801      0s 020ms 743us 
+  0.95        693266      0s 021ms 413us 
+  0.990625    722887      0s 024ms 078us 
+  0.99902344  729009      0s 036ms 194us 
+
+Response body size in bytes (729721 samples)
+  min: 0 | mean: 0 | max: 0 | pstdev: 0
+
+Response header size in bytes (729721 samples)
+  min: 99 | mean: 99.1311117536702 | max: 100 | pstdev: 0.3375225351287733
+
+Blocking. Results are skewed when significant numbers are reported here. (375 samples)
+  min: 0s 000ms 970us | mean: 0s 027ms 936us | max: 0s 035ms 670us | pstdev: 0s 006ms 381us
+
+  Percentile  Count       Value          
+  0.5         188         0s 030ms 646us 
+  0.75        282         0s 031ms 136us 
+  0.8         300         0s 031ms 265us 
+  0.9         338         0s 031ms 550us 
+  0.95        357         0s 031ms 778us 
+  0.990625    372         0s 032ms 879us 
+
+Initiation to completion (839141 samples)
+  min: 0s 000ms 022us | mean: 0s 025ms 574us | max: 0s 132ms 239us | pstdev: 0s 010ms 104us
+
+  Percentile  Count       Value          
+  0.5         419679      0s 028ms 734us 
+  0.75        629406      0s 030ms 593us 
+  0.8         671438      0s 030ms 854us 
+  0.9         755286      0s 031ms 506us 
+  0.95        797212      0s 031ms 979us 
+  0.990625    831275      0s 034ms 113us 
+  0.99902344  838324      0s 050ms 399us 
+
+Counter                                 Value       Per second
+benchmark.http_2xx                      729721      6081.01
+benchmark.pool_overflow                 109420      911.83
+cluster_manager.cluster_added           70          0.58
+default.total_match_count               70          0.58
+membership_change                       70          0.58
+runtime.load_success                    1           0.01
+runtime.override_dir_not_exists         1           0.01
+ssl.ciphers.TLS_AES_128_GCM_SHA256      729842      6082.02
+ssl.curves.X25519                       729842      6082.02
+ssl.handshake                           729842      6082.02
+ssl.sigalgs.ecdsa_secp256r1_sha256      729842      6082.02
+ssl.versions.TLSv1.3                    729842      6082.02
+upstream_cx_destroy                     729721      6081.01
+upstream_cx_destroy_local               729721      6081.01
+upstream_cx_http1_total                 729902      6082.52
+upstream_cx_max_requests                729842      6082.02
+upstream_cx_rx_bytes_total              90581079    754842.26
+upstream_cx_total                       729902      6082.52
+upstream_cx_tx_bytes_total              34302574    285854.76
+upstream_rq_pending_overflow            109420      911.83
+upstream_rq_pending_total               729902      6082.52
+upstream_rq_total                       729842      6082.02
+

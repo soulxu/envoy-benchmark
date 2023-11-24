@@ -10,7 +10,7 @@ export LOAD_CLIENT="nighthawk"
 export BACK_SERVER="fortio"
 export LOAD_TARGET=${LOAD_TARGET:="http://127.0.0.1:13333/?size=4096:100"}
 export LOAD_REQUEST_BODY_SIZE=0
-export LOAD_CONNECTIONS=2000
+export LOAD_CONNECTIONS=20000
 export LOAD_DURATION=120
 export LOAD_MODE=closed
 export LOAD_RPS=100
@@ -33,7 +33,7 @@ for bin in `ls $BIN_DIR`; do
     echo -n "" > $SUITE_DIR/${bin}/test_99.result
     echo -n "" > $SUITE_DIR/${bin}/test_999.result
     echo -n "" > $SUITE_DIR/${bin}/test_throughput.result
-    for concurrency in `seq 5 5 80`; do
+    for concurrency in `seq 1 1 20`; do
         for i in `seq 1 1 $TIMES`; do
             export BASE_DIR=$SUITE_DIR/$bin/$concurrency/$i
             export LOAD_CONCURRENCY=${concurrency}
