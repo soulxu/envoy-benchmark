@@ -1,0 +1,18 @@
+# Envoy enviroment as below
+ENVOY_CPU_SET=56
+ENVOY_CONCURRENCY=1
+ENVOY_BIN=./bin/envoy-static-quic
+ENVOY_CONFIG=./envoy-http2-ecdsa.yaml
+# Fortio server enviroment as below
+BACKEND_CPU_SET=168-223
+# Nighthawk client enviroment as below
+LOAD_CPU_SET=0-55,112-167
+LOAD_CONNECTIONS=20000
+LOAD_RPS=100
+LOAD_DURATION=120
+LOAD_CONCURRENCY=2
+LOAD_TARGET=https://www.example.com:13333/
+LOAD_REQUEST_BODY_SIZE=0
+LOAD_MAX_REQUEST_PER_CONNECTION=1
+LOAD_TRANSPORT_OPT=--protocol http2 --tls-context {"common_tls_context":{"tls_params":{"tls_maximum_protocol_version":"TLSv1_3"},"alpn_protocols":"h2"}}
+LOAD_OTHER_OPT=
