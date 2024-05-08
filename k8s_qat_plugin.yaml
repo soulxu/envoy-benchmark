@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/intel-qat-plugin: unconfined
+  labels:
+    app: intel-qat-plugin
+  name: intel-qat-plugin
+spec:
+  selector:
+    matchLabels:
+      app: intel-qat-plugin
+  template:
+    metadata:
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/intel-qat-plugin: unconfined
+      labels:
+        app: intel-qat-plugin
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        args:
+        - "-v=4"
+        image: intel/intel-qat-plugin:0.29.0
+        imagePullPolicy: IfNotPresent
+        name: intel-qat-plugin
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          seLinuxOptions:
+            type: container_device_plugin_t
+        volumeMounts:
+        - mountPath: /dev/vfio
+          name: devdir
+          readOnly: true
+        - mountPath: /sys/kernel/debug
+          name: debugfsdir
+          readOnly: true
+        - mountPath: /sys/bus/pci
+          name: pcidir
+        - mountPath: /var/lib/kubelet/device-plugins
+          name: kubeletsockets
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      volumes:
+      - hostPath:
+          path: /dev/vfio
+        name: devdir
+      - hostPath:
+          path: /sys/kernel/debug
+        name: debugfsdir
+      - hostPath:
+          path: /sys/bus/pci
+        name: pcidir
+      - hostPath:
+          path: /var/lib/kubelet/device-plugins
+        name: kubeletsockets
