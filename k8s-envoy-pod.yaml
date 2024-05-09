@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envoy
+spec:
+  containers:
+    - name: envoy
+      image: envoyproxy/envoy:contrib-v1.30-latest
+      command: ['/usr/local/bin/envoy', '--concurrency', '1', '-l', 'debug', '--config-path', '/etc/config/envoy-http1.yaml']
+      volumeMounts:
+        - name: config-vol
+          mountPath: /etc/config
+  volumes:
+    - name: config-vol
+      configMap:
+        name: envoy-config
+        items:
+          - key: envoy-http1.yaml
+            path: envoy-http1.yaml

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # This name uniquely identifies the Deployment
+  name: busybox
+spec:  
+  replicas: 1
+  selector:
+    matchLabels:
+      module: busybox
+  template:
+    metadata:
+      labels:
+        # This label is used as a selector in Service definition
+        module: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:1.30.1
+        command:
+          - "sh"
+          - "-c"
+          - "while true; do sleep 6000; done"

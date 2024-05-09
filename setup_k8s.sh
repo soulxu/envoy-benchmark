@@ -13,3 +13,7 @@ bash ./setup_qat.sh
 bash ./qat_vf_status.sh
 kubectl apply -f './k8s-qat-plugin.yaml'
 
+
+kubectl create configmap envoy-config --from-file ./envoy-http2.yaml --from-file ./envoy-http2-qat.yaml
+kubectl create configmap envoy-running-config --from-literal=concurrency=1 --from-literal=config=envoy-http2.yaml
+

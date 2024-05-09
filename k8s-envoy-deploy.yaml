@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-deploy
+spec:
+  selector:
+    matchLabels:
+      run: envoy-pod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: envoy-pod
+    spec:
+      containers:
+        - name: envoy
+          image: envoyproxy/envoy:contrib-v1.30-latest
+          command: ['/usr/local/bin/envoy']
+          args: ['--config-path', "$(ENVOY_CONFIG)", '--concurrency', "$(CONCURRENCY)", '-l', 'debug']
+          ports:
+          - containerPort: 13333
+            name: envoy-port
+          env:
+          - name: "CONCURRENCY"
+            valueFrom:
+              configMapKeyRef:
+                name: envoy-running-config
+                key: concurrency
+          - name: "ENVOY_CONFIG"
+            valueFrom:
+              configMapKeyRef:
+                name: envoy-running-config
+                key: config
+          volumeMounts:
+            - name: config-vol
+              mountPath: /etc/config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: envoy-config
+            items:
+              - key: envoy-http2.yaml
+                path: envoy-http2.yaml
+              - key: envoy-http2-qat.yaml
+                path: envoy-http2-qat.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: envoy-service
+spec:
+  selector:
+    run: envoy-pod
+  type: NodePort
+  ports:
+  - name: envoy-port
+    protocol: TCP
+    port: 13333
+    targetPort: 13333
