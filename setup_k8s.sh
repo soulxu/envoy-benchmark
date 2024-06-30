@@ -14,6 +14,7 @@ bash ./qat_vf_status.sh
 kubectl apply -f './k8s-qat-plugin.yaml'
 
 
-kubectl create configmap envoy-config --from-file ./envoy-http2.yaml --from-file ./envoy-http2-qat.yaml
-kubectl create configmap envoy-running-config --from-literal=concurrency=1 --from-literal=config=envoy-http2.yaml
+kubectl create configmap envoy-config --from-file ./envoy-http1.yaml --from-file ./envoy-http1-qat.yaml
+kubectl create configmap envoy-running-config --from-literal=concurrency=1 --from-literal=config="/etc/config/envoy-http1.yaml"
 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml

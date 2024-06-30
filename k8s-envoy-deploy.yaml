@@ -39,10 +39,10 @@ spec:
           configMap:
             name: envoy-config
             items:
-              - key: envoy-http2.yaml
-                path: envoy-http2.yaml
-              - key: envoy-http2-qat.yaml
-                path: envoy-http2-qat.yaml
+              - key: envoy-http1.yaml
+                path: envoy-http1.yaml
+              - key: envoy-http1-qat.yaml
+                path: envoy-http1-qat.yaml
 ---
 apiVersion: v1
 kind: Service
@@ -57,3 +57,17 @@ spec:
     protocol: TCP
     port: 13333
     targetPort: 13333
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: envoy-admin
+spec:
+  selector:
+    run: envoy-pod
+  type: NodePort
+  ports:
+  - name: envoy-port
+    protocol: TCP
+    port: 9901
+    targetPort: 9901
