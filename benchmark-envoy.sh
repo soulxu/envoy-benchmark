@@ -12,6 +12,9 @@ export BASE_DIR=${BASE_DIR:=./result}
 export LOAD_CLIENT=${LOAD_CLIENT:=fortio}
 export BACK_SERVER=${BACK_SERVER:=fortio}
 
+
+bash ./cleanup.sh
+
 # Running fortio server
 export BACKEND_CPU_SET=${BACKEND_CPU_SET:=54-61}
 echo "start backend server $BACK_SERVER on $FORTIO_HOST"
