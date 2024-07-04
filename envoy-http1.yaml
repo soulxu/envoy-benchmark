@@ -11,7 +11,7 @@ static_resources:
     address:
       socket_address:
         protocol: TCP
-        address: 127.0.0.1
+        address: 0.0.0.0
         port_value: 13333
     tcp_backlog_size: 20480
     filter_chains:
@@ -45,8 +45,8 @@ static_resources:
           disable_stateless_session_resumption: true
           disable_stateful_session_resumption: true
           common_tls_context:
-            # tls_params:
-            #   tls_minimum_protocol_version: TLSv1_3
+            tls_params:
+              tls_minimum_protocol_version: TLSv1_3
             tls_certificates:
             - private_key:
                 inline_string: |
